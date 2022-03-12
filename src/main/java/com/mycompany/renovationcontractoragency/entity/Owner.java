@@ -30,4 +30,5 @@ public class Owner extends User {
         this.email = email;
 
     }
+
 }
