@@ -8,6 +8,6 @@ package com.mycompany.renovationcontractoragency.entity;
  *
  * @author hnafp
  */
-public class Owner {
+public class Property {
     
 }
