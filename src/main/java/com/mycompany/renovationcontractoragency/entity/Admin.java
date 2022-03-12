@@ -4,10 +4,17 @@
  */
 package com.mycompany.renovationcontractoragency.entity;
 
+import lombok.Data;
+
 /**
  *
  * @author hnafp
  */
-public class Property {
-    
+@Data
+public class Admin extends User {
+
+    public Admin(String username, String password) {
+        super(username, password);
+    }
+
 }
