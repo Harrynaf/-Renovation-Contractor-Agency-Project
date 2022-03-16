@@ -4,7 +4,7 @@
  */
 package com.mycompany.renovationcontractoragency.entity;
 
-import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author hnafp
  */
-@Data
+@ToString
 
 @Entity
 public class Owner extends User {
