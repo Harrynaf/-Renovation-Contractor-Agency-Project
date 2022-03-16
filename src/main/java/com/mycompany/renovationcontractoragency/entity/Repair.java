@@ -30,5 +30,4 @@ public class Repair {
     private RepairStatus status = RepairStatus.STANDBY_MODE;
     private BigDecimal cost;
     private String toDoDesc;
-
 }

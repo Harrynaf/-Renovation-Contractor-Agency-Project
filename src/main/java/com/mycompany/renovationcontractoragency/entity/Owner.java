@@ -26,7 +26,7 @@ public class Owner extends User {
     private String phone_number;
     private String email;
 
-@OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner")
     private List<Property> properties;
 
     public Owner(String vat, String name, String surname, String address, String phone_number, String email, String username, String password) {
@@ -37,7 +37,5 @@ public class Owner extends User {
         this.address = address;
         this.phone_number = phone_number;
         this.email = email;
-
     }
-    
 }
