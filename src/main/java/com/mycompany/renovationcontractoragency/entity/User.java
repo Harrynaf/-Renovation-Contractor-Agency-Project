@@ -4,19 +4,29 @@
  */
 package com.mycompany.renovationcontractoragency.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 /**
  *
  * @author hnafp
  */
 @Data
-public abstract class User {
+@NoArgsConstructor
+@AllArgsConstructor
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String username;
     private String password;
 
-    public User() {}
 
     public User(String username, String password) {
         this.username = username;

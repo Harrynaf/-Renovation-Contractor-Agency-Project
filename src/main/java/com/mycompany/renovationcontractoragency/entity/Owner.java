@@ -6,11 +6,17 @@ package com.mycompany.renovationcontractoragency.entity;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.List;
+
 /**
  *
  * @author hnafp
  */
 @Data
+
+@Entity
 public class Owner extends User {
 
     private String vat;
@@ -19,6 +25,9 @@ public class Owner extends User {
     private String address;
     private String phone_number;
     private String email;
+
+@OneToMany(mappedBy = "owner")
+    private List<Property> properties;
 
     public Owner(String vat, String name, String surname, String address, String phone_number, String email, String username, String password) {
         super(username, password);

@@ -5,10 +5,12 @@
 package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.PropertyType;
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDate;
 
 /**
  *
@@ -17,10 +19,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Entity
 public class Property {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String address;
     private LocalDate constructionYear;
     private PropertyType type;
     private String ownerId;
+
+@ManyToOne
+    private Owner owner;
 }
