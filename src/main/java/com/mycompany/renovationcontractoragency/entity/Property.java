@@ -22,15 +22,27 @@ import javax.persistence.*;
 @Entity
 @Table(name = "property")
 public class Property implements Serializable {
+    
     @Id
-    @Column(name = "propertyId",unique = true,nullable = false)
-    private String propertyId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    @Column(name = "ePropertyCode")
+    private String eCode;
     @Column(name = "address")
     private String address;
     @Column(name = "yearOfConstruction")
     private LocalDate constructionYear;
     @Column(name = "propertyType")
+    @Enumerated(value = EnumType.STRING)
     private PropertyType type;
     @ManyToOne
     private Owner owner;
+
+    public Property(String eCode, String address, LocalDate constructionYear, PropertyType type, Owner owner) {
+        this.eCode = eCode;
+        this.address = address;
+        this.constructionYear = constructionYear;
+        this.type = type;
+        this.owner = owner;
+    }
 }
