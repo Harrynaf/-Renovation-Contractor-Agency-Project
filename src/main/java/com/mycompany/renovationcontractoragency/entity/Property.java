@@ -5,12 +5,12 @@
 package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.PropertyType;
+import java.io.Serializable;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 
 /**
  *
@@ -21,15 +21,28 @@ import java.time.LocalDate;
 @AllArgsConstructor
 
 @Entity
-public class Property {
+public class Property implements Serializable {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
+    @Column(name = "ePropertyCode")
+    private String eCode;
+    @Column(name = "address")
     private String address;
+    @Column(name = "yearOfConstruction")
     private LocalDate constructionYear;
+    @Column(name = "propertyType")
+    @Enumerated(value = EnumType.STRING)
     private PropertyType type;
-    private String ownerId;
-
-@ManyToOne
+    @ManyToOne
     private Owner owner;
+
+    public Property(String eCode, String address, LocalDate constructionYear, PropertyType type, Owner owner) {
+        this.eCode = eCode;
+        this.address = address;
+        this.constructionYear = constructionYear;
+        this.type = type;
+        this.owner = owner;
+    }
 }

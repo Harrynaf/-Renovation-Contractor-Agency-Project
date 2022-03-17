@@ -4,6 +4,7 @@
  */
 package com.mycompany.renovationcontractoragency.entity;
 
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -18,15 +19,10 @@ import javax.persistence.Id;
 @ToString
 
 @Entity
+@NoArgsConstructor
 public class Admin extends User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     public Admin(String username, String password) {
         super(username, password);
     }
-
-    
 }
