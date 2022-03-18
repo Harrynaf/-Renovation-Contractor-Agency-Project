@@ -6,11 +6,13 @@ import com.mycompany.renovationcontractoragency.repository.Repository;
 import com.mycompany.renovationcontractoragency.repository.UserRepoImpl;
 import org.hibernate.Session;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        if (session.get(User.class, user.getId()) != null) {
+        if (checkExists(user) == false) {
             userRepo.save(user);
             return user;
         } else {
@@ -39,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(User user) {
-        if (session.get(User.class, user.getId()) == null) {
+        if (checkExists(user) == true) {
             userRepo.delete(user);
         } else {
             throw new EntityNotFoundException();
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        if (session.get(User.class, user.getId()) != null) {
+        if (checkExists(user) == true) {
             userRepo.save(user);
             return user;
         } else {
@@ -62,12 +64,24 @@ public class UserServiceImpl implements UserService {
     }
 
     boolean checkExists(User user) {
-        Criteria criteria = session.createCriteria(User.class);
-        User user1 = (User) criteria.add(Restrictions.eq("yourField", user.getUsername())).uniqueResult();
-        if (user1 != null) {
-            return true;
-        } else {
+
+//        CriteriaBuilder builder = session.getCriteriaBuilder();
+//        CriteriaQuery<User> criteria = builder.createQuery(User.class);
+//        Root<User> userRoot = criteria.from(User.class);
+//        Predicate usernamePredicate = builder.equal(userRoot.get("username"), user.getUsername());
+//        criteria.where(usernamePredicate);
+//        try {
+//            User foundUser = (User) entityManager.createQuery(criteria).getSingleResult();
+//        } catch (NoResultException e) {
+//            return true;
+//        }
+//        return false;
+        List<User> resultList = entityManager.createQuery("SELECT s FROM User s WHERE s.username = :username", User.class).setParameter("username", user.getUsername()).getResultList();
+        if (resultList != null)
             return false;
-        }
+        else return true;
+
     }
+
 }
+
