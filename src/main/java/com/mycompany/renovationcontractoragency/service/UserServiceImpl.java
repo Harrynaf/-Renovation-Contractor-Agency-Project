@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public boolean checkExists(User user) {
 
         List<User> resultList = entityManager.createQuery("SELECT s FROM User s WHERE s.username = :username", User.class).setParameter("username", user.getUsername()).getResultList();
-        if (resultList != null)
+        if (!resultList.isEmpty())
             return true;
         else return false;
 
