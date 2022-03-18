@@ -13,4 +13,6 @@ public interface Service<T> {
     T update(T t);
 
     List<T> getAll();
+
+    boolean checkExists(T t);
 }

@@ -63,23 +63,13 @@ public class UserServiceImpl implements UserService {
         return session.createQuery("SELECT a FROM User a", User.class).getResultList();
     }
 
-    boolean checkExists(User user) {
+    @Override
+    public boolean checkExists(User user) {
 
-//        CriteriaBuilder builder = session.getCriteriaBuilder();
-//        CriteriaQuery<User> criteria = builder.createQuery(User.class);
-//        Root<User> userRoot = criteria.from(User.class);
-//        Predicate usernamePredicate = builder.equal(userRoot.get("username"), user.getUsername());
-//        criteria.where(usernamePredicate);
-//        try {
-//            User foundUser = (User) entityManager.createQuery(criteria).getSingleResult();
-//        } catch (NoResultException e) {
-//            return true;
-//        }
-//        return false;
         List<User> resultList = entityManager.createQuery("SELECT s FROM User s WHERE s.username = :username", User.class).setParameter("username", user.getUsername()).getResultList();
         if (resultList != null)
-            return false;
-        else return true;
+            return true;
+        else return false;
 
     }
 

@@ -26,13 +26,14 @@ public class Main {
         System.out.println(property1.getId());
         System.out.println(owner1.getId());
         System.out.println(owner2.getId());
-        try {
+        //try {
+            userService.create(owner1);
             userService.create(owner1);
             userService.create(owner2);
-        } catch (
-                EntityExistsException e) {
-            System.out.println(e.getMessage());
-        }
+        //} catch (
+         //       EntityExistsException e) {
+           // System.out.println(e.getMessage());
+        //}
 //        try {
 //            userService.update(owner1);
 //        } catch (EntityNotFoundException e) {
