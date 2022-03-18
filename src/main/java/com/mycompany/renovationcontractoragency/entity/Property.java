@@ -25,7 +25,7 @@ public class Property implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(name = "ePropertyCode")
     private String eCode;
     @Column(name = "address")
