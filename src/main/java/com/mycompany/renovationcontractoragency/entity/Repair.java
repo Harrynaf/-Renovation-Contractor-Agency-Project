@@ -29,7 +29,7 @@ public class Repair implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long repairId;
     @ManyToOne
-    @JoinColumn(name = "ownerId", referencedColumnName = "vat")
+    @JoinColumn(name = "ownerId", referencedColumnName = "id")
     private Owner owner;
     @ManyToOne
     @JoinColumn(name = "propertyId", referencedColumnName = "id")
