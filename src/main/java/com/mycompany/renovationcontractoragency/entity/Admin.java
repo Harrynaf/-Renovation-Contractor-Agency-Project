@@ -6,18 +6,12 @@ package com.mycompany.renovationcontractoragency.entity;
 
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 /**
  *
  * @author hnafp
  */
 @ToString
-
 @Entity
 @NoArgsConstructor
 public class Admin extends User {

@@ -1,8 +1,6 @@
 package com.mycompany.renovationcontractoragency.repository;
 
-import com.mycompany.renovationcontractoragency.entity.Property;
 import com.mycompany.renovationcontractoragency.entity.User;
-
 import javax.persistence.EntityManager;
 
 public class UserRepoImpl implements UserRepo {
@@ -27,10 +25,8 @@ public class UserRepoImpl implements UserRepo {
 
     @Override
     public void delete(User owner) {
-
         entityManager.getTransaction().begin();
         entityManager.remove(owner);
         entityManager.getTransaction().commit();
-
     }
 }

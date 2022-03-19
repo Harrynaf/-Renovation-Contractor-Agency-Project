@@ -9,7 +9,9 @@ package com.mycompany.renovationcontractoragency.enums;
  * @author Ioannis Psathas
  */
 public enum PropertyType {
-    DETACHED_HOUSE("Detached house"),MAISONETTE("Maisonette"),APARTMENT_BUILDING("Apartment building");
+    DETACHED_HOUSE("Detached house"),
+    MAISONETTE("Maisonette"),
+    APARTMENT_BUILDING("Apartment building");
     
     private final String propertyType;
 

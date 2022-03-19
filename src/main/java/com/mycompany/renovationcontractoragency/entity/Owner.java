@@ -7,8 +7,6 @@ package com.mycompany.renovationcontractoragency.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import java.util.List;
  * @author hnafp
  */
 @ToString
-
 @Entity
 @NoArgsConstructor
 @Data
@@ -44,5 +41,4 @@ public class Owner extends User {
         this.phone_number = phone_number;
         this.email = email;
     }
-
 }

@@ -5,38 +5,62 @@
 package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.Property;
-
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  * @author Ioannis Psathas
  */
 public class PropertyRepoImpl implements PropertyRepo {
 
-    private EntityManager entityManager;
-
-    public PropertyRepoImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    EntityManagerFactory emf;
+    EntityManager entityManager;
+    
+    public PropertyRepoImpl() {
+        this.emf = Persistence.createEntityManagerFactory("TechnikonPU");
+        this.entityManager = emf.createEntityManager();
     }
 
     @Override
     public void save(Property property) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(property);
-        entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public Property get(long id) {
-        return entityManager.find(Property.class, id);
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(property);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getClass());
+            System.out.println(e.getMessage());
+            entityManager.getTransaction().rollback();
+        }
     }
 
     @Override
     public void delete(Property property) {
-
-        entityManager.getTransaction().begin();
-        entityManager.remove(property);
-        entityManager.getTransaction().commit();
-
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(property);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getClass());
+            System.out.println(e.getMessage());
+            entityManager.getTransaction().rollback();
+        }
+    }
+    
+    @Override
+    public Property get(long id) {
+        return entityManager.find(Property.class, id);
+    }
+    
+    @Override
+    public List<Property> getAll() {
+        return entityManager.createQuery("SELECT p FROM Property p").getResultList();
+    }
+    
+    @Override
+    public Property getByVat(String vat) {
+        return entityManager.createQuery("SELECT p FROM Property p WHERE p.owner.vat = :vat",Property.class).setParameter("vat", vat).getSingleResult();
     }
 }

@@ -7,6 +7,7 @@ package com.mycompany.renovationcontractoragency.entity;
 import com.mycompany.renovationcontractoragency.enums.PropertyType;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,14 +20,14 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
+@Table(name = "property")
 public class Property implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "ePropertyCode")
+    @Column(name = "ePropertyCode",nullable = false,unique = true)
     private String eCode;
     @Column(name = "address")
     private String address;
@@ -37,6 +38,8 @@ public class Property implements Serializable {
     private PropertyType type;
     @ManyToOne
     private Owner owner;
+    @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<Repair> repairs;
 
     public Property(String eCode, String address, LocalDate constructionYear, PropertyType type, Owner owner) {
         this.eCode = eCode;
