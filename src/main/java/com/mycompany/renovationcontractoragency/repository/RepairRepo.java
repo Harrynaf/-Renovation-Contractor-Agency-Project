@@ -15,6 +15,4 @@ public interface RepairRepo extends Repository<Repair>{
     List<Repair> getRepairByDate(LocalDateTime date);
     List<Repair> getRepairByDateRange(LocalDateTime dateFrom, LocalDateTime dateTo);
     List<Repair> getRepairByOwnerId(long id);
-    boolean checkOwner(Repair repair);
-    boolean checkProperty(Repair repair);
 }

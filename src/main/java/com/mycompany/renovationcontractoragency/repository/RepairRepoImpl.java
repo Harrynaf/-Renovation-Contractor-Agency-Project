@@ -65,23 +65,17 @@ public class RepairRepoImpl implements RepairRepo{
 
     @Override
     public List<Repair> getRepairByOwnerId(long id) {
-        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.ownerId = :id", Repair.class)
+        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.owner.id = :id", Repair.class)
                             .setParameter("id", id)
                             .getResultList();
     }
 
     @Override
     public boolean checkExists(Repair repair) {
-        return get(repair.getRepairId()) != null;
-    }
-
-    @Override
-    public boolean checkOwner(Repair repair) {
-        return userRepo.get(repair.getOwner().getId()) != null;
-    }
-
-    @Override
-    public boolean checkProperty(Repair repair) {
-        return propertyRepo.get(repair.getProperty().getId()) != null;
+        if (repair.getRepairId() != null) {
+            return get(repair.getRepairId()) != null;
+        } else {
+            return false;
+        }
     }
 }
