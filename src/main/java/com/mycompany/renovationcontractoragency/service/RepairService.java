@@ -2,5 +2,13 @@ package com.mycompany.renovationcontractoragency.service;
 
 import com.mycompany.renovationcontractoragency.entity.Repair;
 
-public interface RepairService extends Service<Repair>{
+import java.time.LocalDateTime;
+import java.util.List;
+
+public interface RepairService extends Service<Repair> {
+    List<Repair> getRepairByDate(LocalDateTime date);
+    List<Repair> getRepairByDateRange(LocalDateTime dateFrom, LocalDateTime dateTo);
+    List<Repair> getRepairByOwnerId(long id);
+    boolean checkOwner(Repair repair);
+    boolean checkProperty(Repair repair);
 }

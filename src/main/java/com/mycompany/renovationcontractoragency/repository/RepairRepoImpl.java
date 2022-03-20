@@ -17,6 +17,9 @@ public class RepairRepoImpl implements RepairRepo{
 
     private EntityManager entityManager;
 
+    private UserRepo userRepo;
+    private PropertyRepo propertyRepo;
+
     public RepairRepoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -29,16 +32,30 @@ public class RepairRepoImpl implements RepairRepo{
     }
 
     @Override
+    public void delete(Repair repair) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(repair);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public List<Repair> getAll() {
+        return entityManager.createQuery("SELECT r FROM Repair r", Repair.class).getResultList();
+    }
+
+    @Override
     public Repair get(long id) {
         return entityManager.find(Repair.class, id);
     }
 
+    @Override
     public List<Repair> getRepairByDate(LocalDateTime date) {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.date = :date", Repair.class)
                             .setParameter("date", date)
                             .getResultList();
     }
 
+    @Override
     public List<Repair> getRepairByDateRange(LocalDateTime dateFrom, LocalDateTime dateTo) {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.date >= :dateFrom and r.date <= :dateTo", Repair.class)
                             .setParameter("dateFrom", dateFrom)
@@ -46,6 +63,7 @@ public class RepairRepoImpl implements RepairRepo{
                             .getResultList();
     }
 
+    @Override
     public List<Repair> getRepairByOwnerId(long id) {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.ownerId = :id", Repair.class)
                             .setParameter("id", id)
@@ -53,9 +71,17 @@ public class RepairRepoImpl implements RepairRepo{
     }
 
     @Override
-    public void delete(Repair repair) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(repair);
-        entityManager.getTransaction().commit();
+    public boolean checkExists(Repair repair) {
+        return get(repair.getRepairId()) != null;
+    }
+
+    @Override
+    public boolean checkOwner(Repair repair) {
+        return userRepo.get(repair.getOwner().getId()) != null;
+    }
+
+    @Override
+    public boolean checkProperty(Repair repair) {
+        return propertyRepo.get(repair.getProperty().getId()) != null;
     }
 }
