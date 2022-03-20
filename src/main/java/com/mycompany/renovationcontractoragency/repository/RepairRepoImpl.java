@@ -74,8 +74,7 @@ public class RepairRepoImpl implements RepairRepo{
     public boolean checkExists(Repair repair) {
         if (repair.getRepairId() != null) {
             return get(repair.getRepairId()) != null;
-        } else {
-            return false;
         }
+        return false;
     }
 }
