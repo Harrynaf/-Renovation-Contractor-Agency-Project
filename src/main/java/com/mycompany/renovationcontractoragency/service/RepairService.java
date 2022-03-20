@@ -9,6 +9,4 @@ public interface RepairService extends Service<Repair> {
     List<Repair> getRepairByDate(LocalDateTime date);
     List<Repair> getRepairByDateRange(LocalDateTime dateFrom, LocalDateTime dateTo);
     List<Repair> getRepairByOwnerId(long id);
-    boolean checkOwner(Repair repair);
-    boolean checkProperty(Repair repair);
 }
