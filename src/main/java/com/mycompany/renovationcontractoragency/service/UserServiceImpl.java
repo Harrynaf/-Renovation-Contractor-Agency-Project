@@ -73,5 +73,16 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User searchByVat(String vat) {
+        User result;
+        return result = entityManager.createQuery("SELECT s FROM User s WHERE s.vat = :vat", User.class).setParameter("vat", vat).getSingleResult();
+    }
+
+    @Override
+    public User searchByEmail(String email) {
+        User result;
+        return result = entityManager.createQuery("SELECT s FROM User s WHERE s.email = :email", User.class).setParameter("email", email).getSingleResult();
+    }
 }
 
