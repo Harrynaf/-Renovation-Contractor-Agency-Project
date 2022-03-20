@@ -6,7 +6,6 @@ package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.RepairStatus;
 import com.mycompany.renovationcontractoragency.enums.RepairType;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,9 +20,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "repair")
+@Table(name = "repair", uniqueConstraints = { @UniqueConstraint(columnNames = {"ownerId", "propertyId"}) })
 public class Repair implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +30,7 @@ public class Repair implements Serializable {
     @JoinColumn(name = "ownerId", referencedColumnName = "id")
     private Owner owner;
     @ManyToOne
-    @JoinColumn(name = "propertyId", referencedColumnName = "id")
+    @JoinColumn(name = "propertyId", referencedColumnName = "id", unique = true)
     private Property property;
     @Column(name = "date")
     private LocalDateTime date;
@@ -48,4 +46,15 @@ public class Repair implements Serializable {
     private BigDecimal cost;
     @Column(name = "workToDoDescription")
     private String toDoDesc;
+
+    public Repair(Owner owner, Property property, LocalDateTime date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
+        this.owner = owner;
+        this.property = property;
+        this.date = date;
+        this.description = description;
+        this.type = type;
+        this.status = status;
+        this.cost = cost;
+        this.toDoDesc = toDoDesc;
+    }
 }
