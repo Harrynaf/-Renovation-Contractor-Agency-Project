@@ -5,12 +5,12 @@
 package com.mycompany.renovationcontractoragency.service;
 
 import com.mycompany.renovationcontractoragency.entity.Property;
+import java.util.List;
 
 /**
  *
  * @author Ioannis Psathas
  */
 public interface PropertyService extends Service<Property>{
-    Property getByVat(String vat);
-    Property get(Long id);
+    List<Property> getByVat(String vat);
 }

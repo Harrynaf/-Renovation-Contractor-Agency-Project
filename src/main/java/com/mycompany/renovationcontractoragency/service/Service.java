@@ -7,5 +7,6 @@ public interface Service<T> {
     void delete(T t);
     T update(T t);
     List<T> getAll();
-    //T get(Long id);
+    T get(long id);
+    boolean checkExists(T t);
 }

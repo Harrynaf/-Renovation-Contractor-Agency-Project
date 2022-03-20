@@ -7,34 +7,53 @@ package com.mycompany.renovationcontractoragency.service;
 import com.mycompany.renovationcontractoragency.entity.Property;
 import com.mycompany.renovationcontractoragency.repository.PropertyRepo;
 import java.util.List;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 
 /**
  *
  * @author Ioannis Psathas
  */
-public class PropertyServiceImpl implements PropertyService{
-    
+public class PropertyServiceImpl implements PropertyService {
+
     private final PropertyRepo propertyRepo;
 
     public PropertyServiceImpl(PropertyRepo propertyRepo) {
         this.propertyRepo = propertyRepo;
     }
-    
+
     @Override
     public Property create(Property property) {
-        propertyRepo.save(property);
-    return property;
+        if (!checkExists(property)) {
+            propertyRepo.save(property);
+            return property;
+        } else {
+            throw new EntityExistsException();
+        }
     }
 
     @Override
     public void delete(Property property) {
-        propertyRepo.delete(property);
+        if (checkExists(property)) {
+            propertyRepo.delete(property);
+        } else {
+            throw new EntityNotFoundException();
+        }
     }
 
     @Override
     public Property update(Property property) {
+        if (checkExists(property)) {
             propertyRepo.save(property);
-    return property;
+            return property;
+        } else {
+            throw new EntityNotFoundException();
+        }
+    }
+    
+    @Override
+    public Property get(long id) {
+        return propertyRepo.get(id);
     }
     
     @Override
@@ -43,12 +62,12 @@ public class PropertyServiceImpl implements PropertyService{
     }
 
     @Override
-    public Property getByVat(String vat) {
+    public List<Property> getByVat(String vat) {
         return propertyRepo.getByVat(vat);
     }
 
     @Override
-    public Property get(Long id) {
-        return propertyRepo.get(id);
+    public boolean checkExists(Property property) {
+        return propertyRepo.checkExists(property);
     }
 }

@@ -4,30 +4,28 @@
  */
 package com.mycompany.renovationcontractoragency.entity;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import javax.persistence.*;
 import java.util.List;
-
+import lombok.ToString;
 /**
  * @author hnafp
  */
-@ToString
+
 @Entity
 @NoArgsConstructor
-@Data
+@ToString
 public class Owner extends User {
 
+    @Column(unique=true)
     private String vat;
     private String name;
     private String surname;
     private String address;
+    @Column(unique=true)
     private String phone_number;
+    @Column(unique=true)
     private String email;
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
 
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Property> properties;

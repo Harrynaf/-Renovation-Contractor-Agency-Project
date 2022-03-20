@@ -7,46 +7,30 @@ package com.mycompany.renovationcontractoragency.repository;
 import com.mycompany.renovationcontractoragency.entity.Property;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  * @author Ioannis Psathas
  */
 public class PropertyRepoImpl implements PropertyRepo {
 
-    EntityManagerFactory emf;
-    EntityManager entityManager;
-    
-    public PropertyRepoImpl() {
-        this.emf = Persistence.createEntityManagerFactory("TechnikonPU");
-        this.entityManager = emf.createEntityManager();
+    private final EntityManager entityManager;
+
+    public PropertyRepoImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
     public void save(Property property) {
-        try {
             entityManager.getTransaction().begin();
             entityManager.persist(property);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getClass());
-            System.out.println(e.getMessage());
-            entityManager.getTransaction().rollback();
-        }
     }
 
     @Override
     public void delete(Property property) {
-        try {
             entityManager.getTransaction().begin();
             entityManager.remove(property);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getClass());
-            System.out.println(e.getMessage());
-            entityManager.getTransaction().rollback();
-        }
     }
     
     @Override
@@ -56,11 +40,17 @@ public class PropertyRepoImpl implements PropertyRepo {
     
     @Override
     public List<Property> getAll() {
-        return entityManager.createQuery("SELECT p FROM Property p").getResultList();
+        return entityManager.createQuery("SELECT p FROM Property p",Property.class).getResultList();
     }
     
     @Override
-    public Property getByVat(String vat) {
-        return entityManager.createQuery("SELECT p FROM Property p WHERE p.owner.vat = :vat",Property.class).setParameter("vat", vat).getSingleResult();
+    public List<Property> getByVat(String vat) {
+        return entityManager.createQuery("SELECT p FROM Property p WHERE p.owner.vat = :vat",Property.class).setParameter("vat", vat).getResultList();
+    }
+    
+    @Override
+    public boolean checkExists(Property property) {
+        List<Property> resultList = entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.getECode()).getResultList();
+        return !resultList.isEmpty();
     }
 }

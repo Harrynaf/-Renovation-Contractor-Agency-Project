@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 public class Repair implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long repairId;
+    private Long repairId;
     @ManyToOne
     @JoinColumn(name = "ownerId", referencedColumnName = "vat")
     private Owner owner;

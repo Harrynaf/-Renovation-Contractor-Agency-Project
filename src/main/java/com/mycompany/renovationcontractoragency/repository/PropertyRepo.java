@@ -12,6 +12,5 @@ import java.util.List;
  * @author Ioannis Psathas
  */
 public interface PropertyRepo extends Repository<Property>{
-    Property getByVat(String vat);
-    List<Property> getAll();
+    List<Property> getByVat(String vat);
 }

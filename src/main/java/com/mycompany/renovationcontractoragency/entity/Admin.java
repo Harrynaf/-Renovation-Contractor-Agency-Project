@@ -11,9 +11,9 @@ import javax.persistence.Entity;
  *
  * @author hnafp
  */
-@ToString
 @Entity
 @NoArgsConstructor
+@ToString
 public class Admin extends User {
 
     public Admin(String username, String password) {
