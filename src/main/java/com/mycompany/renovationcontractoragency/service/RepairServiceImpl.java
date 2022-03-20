@@ -1,10 +1,8 @@
 package com.mycompany.renovationcontractoragency.service;
 
 import com.mycompany.renovationcontractoragency.entity.Repair;
-import com.mycompany.renovationcontractoragency.repository.RepairRepoImpl;
-import com.mycompany.renovationcontractoragency.repository.Repository;
+import com.mycompany.renovationcontractoragency.repository.*;
 import org.hibernate.Session;
-
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -12,7 +10,9 @@ import java.util.List;
 
 public class RepairServiceImpl implements RepairService {
     private EntityManager entityManager;
-    private Repository repairRepo;
+    private RepairRepo repairRepo;
+    private UserRepo userRepo;
+    private PropertyRepo propertyRepo;
     Session session;
 
     public RepairServiceImpl(EntityManager entityManager) {
@@ -24,12 +24,17 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public Repair create(Repair repair) {
         if (!checkExists(repair)) {
+            if (!checkOwner(repair)) {
+                throw new EntityExistsException();
+            }
+            if (!checkProperty(repair)) {
+                throw new EntityExistsException();
+            }
             repairRepo.save(repair);
             return repair;
         } else {
             throw new EntityExistsException();
         }
-
     }
 
     @Override
@@ -44,6 +49,12 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public Repair update(Repair repair) {
         if (checkExists(repair)) {
+            if (!checkOwner(repair)) {
+                throw new EntityExistsException();
+            }
+            if (!checkProperty(repair)) {
+                throw new EntityExistsException();
+            }
             repairRepo.save(repair);
             return repair;
         } else {
@@ -59,5 +70,13 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public boolean checkExists(Repair repair) {
         return repairRepo.get(repair.getRepairId()) != null;
+    }
+
+    public boolean checkOwner(Repair repair) {
+        return userRepo.get(repair.getOwner().getId()) != null;
+    }
+
+    public boolean checkProperty(Repair repair) {
+        return propertyRepo.get(repair.getProperty().getId()) != null;
     }
 }
