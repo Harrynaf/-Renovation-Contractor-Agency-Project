@@ -6,8 +6,11 @@ package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.Owner;
 import com.mycompany.renovationcontractoragency.entity.Repair;
+import com.mycompany.renovationcontractoragency.entity.User;
+
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  *
@@ -52,6 +55,11 @@ public class RepairRepoImpl implements RepairRepo{
             System.out.println(exception.getMessage());
             entityManager.getTransaction().rollback();
         }
+    }
+
+    @Override
+    public List<Repair> getAll() {
+        return entityManager.createQuery("SELECT a FROM Repair a", Repair.class).getResultList();
     }
 
 }

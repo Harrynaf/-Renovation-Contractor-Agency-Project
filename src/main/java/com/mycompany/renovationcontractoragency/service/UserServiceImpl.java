@@ -20,12 +20,10 @@ public class UserServiceImpl implements UserService {
 
     private EntityManager entityManager;
     private Repository userRepo;
-    Session session;
 
     public UserServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
         this.userRepo = new UserRepoImpl(entityManager);
-        session = entityManager.unwrap(Session.class);
     }
 
     @Override
@@ -60,7 +58,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        return session.createQuery("SELECT a FROM User a", User.class).getResultList();
+        return userRepo.getAll();
+    }
+
+    @Override
+    public User get(long id) {
+        return (User) userRepo.get(id);
     }
 
     @Override

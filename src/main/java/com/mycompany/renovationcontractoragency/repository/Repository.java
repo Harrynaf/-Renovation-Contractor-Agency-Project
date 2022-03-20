@@ -4,12 +4,17 @@
  */
 package com.mycompany.renovationcontractoragency.repository;
 
+import java.util.List;
+
 /**
- *
  * @author Ioannis Psathas
  */
 public interface Repository<T> {
     void save(T t);
-    T get(long id);
+
     void delete(T t);
+
+    List<T> getAll();
+
+    T get(long id);
 }

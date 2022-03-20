@@ -23,14 +23,22 @@ public class Main {
 
         try {
             userService.create(owner1);
+
             userService.create(owner2);
         } catch (
                 EntityExistsException e) {
             System.out.println(e.getMessage());
         }
+        try{
+        System.out.println(userService.searchByEmail("harry@mail.com"));
+        System.out.println(userService.searchByVat("123456789"));}
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
         try {
-            System.out.println(userService.searchByEmail("harry@mail.com"));
-            System.out.println(userService.searchByVat("123456789"));
+            owner2.setUsername("adsdasdasdasdas");
+            userService.update(owner2);
             userService.update(owner1);
         } catch (EntityNotFoundException e) {
             System.out.println(e.getMessage());

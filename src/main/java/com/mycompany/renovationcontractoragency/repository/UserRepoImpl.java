@@ -4,6 +4,7 @@ import com.mycompany.renovationcontractoragency.entity.Property;
 import com.mycompany.renovationcontractoragency.entity.User;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 public class UserRepoImpl implements UserRepo {
 
@@ -20,10 +21,6 @@ public class UserRepoImpl implements UserRepo {
         entityManager.getTransaction().commit();
     }
 
-    @Override
-    public User get(long id) {
-        return entityManager.find(User.class, id);
-    }
 
     @Override
     public void delete(User owner) {
@@ -32,5 +29,15 @@ public class UserRepoImpl implements UserRepo {
         entityManager.remove(owner);
         entityManager.getTransaction().commit();
 
+    }
+
+    @Override
+    public List<User> getAll() {
+        return entityManager.createQuery("SELECT a FROM User a", User.class).getResultList();
+    }
+
+    @Override
+    public User get(long id) {
+        return entityManager.find(User.class, id);
     }
 }
