@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.util.List;
 
 
-
 public class UserServiceImpl implements UserService {
 
     private final EntityManager entityManager;
@@ -64,19 +63,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkExists(User user) {
 
-        List<User> resultList = entityManager.createQuery("SELECT s FROM User s WHERE s.username = :username", User.class).setParameter("username", user.getUsername()).getResultList();
-        return !resultList.isEmpty();
+        return userRepo.checkExists(user);
 
     }
 
     @Override
     public User searchByVat(String vat) {
-        return entityManager.createQuery("SELECT s FROM User s WHERE s.vat = :vat", User.class).setParameter("vat", vat).getSingleResult();
+        return userRepo.searchByVat(vat);
     }
 
     @Override
     public User searchByEmail(String email) {
-        return entityManager.createQuery("SELECT s FROM User s WHERE s.email = :email", User.class).setParameter("email", email).getSingleResult();
+        return userRepo.searchByEmail(email);
     }
 }
 

@@ -35,6 +35,12 @@ public class RepairRepoImpl implements RepairRepo{
     public Repair get(long id) {
         return entityManager.find(Repair.class, id);
     }
+
+    @Override
+    public boolean checkExists(Repair repair) {
+        return false;
+    }
+
     public Repair getRepairByDate(LocalDateTime date) {
         return entityManager.find(Repair.class, date);
     }

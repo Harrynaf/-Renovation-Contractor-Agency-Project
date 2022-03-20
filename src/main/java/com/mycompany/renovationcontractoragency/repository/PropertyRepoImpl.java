@@ -34,6 +34,11 @@ public class PropertyRepoImpl implements PropertyRepo {
     }
 
     @Override
+    public boolean checkExists(Property property) {
+        return false;
+    }
+
+    @Override
     public void delete(Property property) {
 
         entityManager.getTransaction().begin();
