@@ -3,23 +3,18 @@ package com.mycompany.renovationcontractoragency.service;
 import com.mycompany.renovationcontractoragency.entity.Owner;
 import com.mycompany.renovationcontractoragency.entity.User;
 import com.mycompany.renovationcontractoragency.repository.Repository;
+import com.mycompany.renovationcontractoragency.repository.UserRepo;
 import com.mycompany.renovationcontractoragency.repository.UserRepoImpl;
-import org.hibernate.Session;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
+
 
 public class UserServiceImpl implements UserService {
 
-    private EntityManager entityManager;
-    private Repository userRepo;
+    private final EntityManager entityManager;
+    private final UserRepo userRepo;
 
     public UserServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -28,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        if (checkExists(user) == false) {
+        if (!checkExists(user)) {
             userRepo.save(user);
             return user;
         } else {
@@ -39,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(User user) {
-        if (checkExists(user) == true) {
+        if (checkExists(user)) {
             userRepo.delete(user);
         } else {
             throw new EntityNotFoundException();
@@ -48,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        if (checkExists(user) == true) {
+        if (checkExists(user)) {
             userRepo.save(user);
             return user;
         } else {
@@ -63,29 +58,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(long id) {
-        return (User) userRepo.get(id);
+        return userRepo.get(id);
     }
 
     @Override
     public boolean checkExists(User user) {
 
         List<User> resultList = entityManager.createQuery("SELECT s FROM User s WHERE s.username = :username", User.class).setParameter("username", user.getUsername()).getResultList();
-        if (!resultList.isEmpty())
-            return true;
-        else return false;
+        return !resultList.isEmpty();
 
     }
 
     @Override
     public User searchByVat(String vat) {
-        User result;
-        return result = entityManager.createQuery("SELECT s FROM User s WHERE s.vat = :vat", User.class).setParameter("vat", vat).getSingleResult();
+        return entityManager.createQuery("SELECT s FROM User s WHERE s.vat = :vat", User.class).setParameter("vat", vat).getSingleResult();
     }
 
     @Override
     public User searchByEmail(String email) {
-        User result;
-        return result = entityManager.createQuery("SELECT s FROM User s WHERE s.email = :email", User.class).setParameter("email", email).getSingleResult();
+        return entityManager.createQuery("SELECT s FROM User s WHERE s.email = :email", User.class).setParameter("email", email).getSingleResult();
     }
 }
 

@@ -1,14 +1,12 @@
 package com.mycompany.renovationcontractoragency.repository;
 
-import com.mycompany.renovationcontractoragency.entity.Property;
 import com.mycompany.renovationcontractoragency.entity.User;
-
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class UserRepoImpl implements UserRepo {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public UserRepoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;

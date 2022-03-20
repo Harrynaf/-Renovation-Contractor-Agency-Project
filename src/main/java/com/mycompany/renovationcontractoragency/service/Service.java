@@ -1,6 +1,5 @@
 package com.mycompany.renovationcontractoragency.service;
 
-import com.mycompany.renovationcontractoragency.entity.User;
 
 import java.util.List;
 

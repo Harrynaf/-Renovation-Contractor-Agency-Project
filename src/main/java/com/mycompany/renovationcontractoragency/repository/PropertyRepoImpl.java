@@ -5,15 +5,17 @@
 package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.Property;
+import com.mycompany.renovationcontractoragency.entity.Repair;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  * @author Ioannis Psathas
  */
 public class PropertyRepoImpl implements PropertyRepo {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public PropertyRepoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -38,5 +40,10 @@ public class PropertyRepoImpl implements PropertyRepo {
         entityManager.remove(property);
         entityManager.getTransaction().commit();
 
+    }
+
+    @Override
+    public List<Property> getAll() {
+        return entityManager.createQuery("SELECT a FROM Property a", Property.class).getResultList();
     }
 }
