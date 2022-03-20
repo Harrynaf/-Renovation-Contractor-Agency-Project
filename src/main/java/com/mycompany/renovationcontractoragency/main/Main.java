@@ -29,6 +29,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
         try {
+            System.out.println(userService.searchByEmail("harry@mail.com"));
+            System.out.println(userService.searchByVat("123456789"));
             userService.update(owner1);
         } catch (EntityNotFoundException e) {
             System.out.println(e.getMessage());

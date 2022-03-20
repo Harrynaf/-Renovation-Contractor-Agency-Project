@@ -5,6 +5,8 @@ import com.mysql.cj.xdevapi.Schema;
 
 import java.util.List;
 
-public interface UserService extends Service<User>{
+public interface UserService extends Service<User> {
+    User searchByVat(String s);
 
+    User searchByEmail(String s);
 }

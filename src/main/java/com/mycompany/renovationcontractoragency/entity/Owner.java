@@ -22,15 +22,15 @@ import java.util.List;
 @Data
 public class Owner extends User {
 
+    @Column(unique=true)
     private String vat;
     private String name;
     private String surname;
     private String address;
+    @Column(unique=true)
     private String phone_number;
+    @Column(unique=true)
     private String email;
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
 
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Property> properties;
