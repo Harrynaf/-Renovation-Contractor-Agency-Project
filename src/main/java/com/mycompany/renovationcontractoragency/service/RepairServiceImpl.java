@@ -2,20 +2,17 @@ package com.mycompany.renovationcontractoragency.service;
 
 import com.mycompany.renovationcontractoragency.entity.Repair;
 import com.mycompany.renovationcontractoragency.repository.RepairRepo;
-import com.mycompany.renovationcontractoragency.repository.RepairRepoImpl;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class RepairServiceImpl implements RepairService {
-    private EntityManager entityManager;
-    private RepairRepo repairRepo;
 
-    public RepairServiceImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        this.repairRepo = new RepairRepoImpl(entityManager);
+    private final RepairRepo repairRepo;
+
+    public RepairServiceImpl(RepairRepo repairRepo) {
+        this.repairRepo = repairRepo;
     }
 
     @Override
@@ -25,7 +22,7 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public void delete(Repair repair) {
+    public void delete(Repair repair) throws EntityNotFoundException {
         if (checkExists(repair)) {
             repairRepo.delete(repair);
         } else {
@@ -34,7 +31,7 @@ public class RepairServiceImpl implements RepairService {
     }
 
     @Override
-    public Repair update(Repair repair) {
+    public Repair update(Repair repair) throws EntityNotFoundException {
         if (checkExists(repair)) {
             repairRepo.save(repair);
             return repair;
