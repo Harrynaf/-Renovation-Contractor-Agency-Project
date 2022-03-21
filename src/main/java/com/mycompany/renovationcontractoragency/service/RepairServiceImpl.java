@@ -1,9 +1,9 @@
 package com.mycompany.renovationcontractoragency.service;
 
 import com.mycompany.renovationcontractoragency.entity.Repair;
-import com.mycompany.renovationcontractoragency.repository.*;
+import com.mycompany.renovationcontractoragency.repository.RepairRepo;
+import com.mycompany.renovationcontractoragency.repository.RepairRepoImpl;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -11,31 +11,17 @@ import java.util.List;
 
 public class RepairServiceImpl implements RepairService {
     private EntityManager entityManager;
-    private UserRepo userRepo;
-    private PropertyRepo propertyRepo;
     private RepairRepo repairRepo;
 
     public RepairServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
-        this.userRepo = new UserRepoImpl(entityManager);
-        this.propertyRepo = new PropertyRepoImpl(entityManager);
         this.repairRepo = new RepairRepoImpl(entityManager);
     }
 
     @Override
     public Repair create(Repair repair) {
-        if (!checkExists(repair)) {
-            if (!userRepo.checkExists(repair.getOwner())) {
-                throw new EntityExistsException(); // TODO Custom Exception
-            }
-            if (!propertyRepo.checkExists(repair.getProperty())) {
-                throw new EntityExistsException(); // TODO Custom Exception
-            }
-            repairRepo.save(repair);
-            return repair;
-        } else {
-            throw new EntityExistsException();
-        }
+        repairRepo.save(repair);
+        return repair;
     }
 
     @Override
@@ -50,12 +36,6 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public Repair update(Repair repair) {
         if (checkExists(repair)) {
-            if (!userRepo.checkExists(repair.getOwner())) {
-                throw new EntityExistsException(); // TODO Custom Exception
-            }
-            if (!propertyRepo.checkExists(repair.getProperty())) {
-                throw new EntityExistsException(); // TODO Custom Exception
-            }
             repairRepo.save(repair);
             return repair;
         } else {
@@ -86,6 +66,11 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public List<Repair> getRepairByOwnerId(long id) {
         return repairRepo.getRepairByOwnerId(id);
+    }
+
+    @Override
+    public List<Repair> getRepairByOwnerAndProperty(long ownerId, long propertyId) {
+        return repairRepo.getRepairByOwnerAndProperty(ownerId, propertyId);
     }
 
     @Override
