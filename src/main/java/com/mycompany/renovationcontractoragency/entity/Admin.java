@@ -4,8 +4,6 @@
  */
 package com.mycompany.renovationcontractoragency.entity;
 
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import javax.persistence.Entity;
 /**
  *

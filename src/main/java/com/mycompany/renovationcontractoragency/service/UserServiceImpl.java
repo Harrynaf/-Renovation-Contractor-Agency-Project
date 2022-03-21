@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(User user) {
+    public User create(User user) throws EntityExistsException{
         if (!findByUsername(user)) {
             userRepo.save(user);
             return user;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(User user) throws EntityNotFoundException{
         if (get(user.getId())!=null) {
             userRepo.delete(user);
         } else {
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
+    public User update(User user) throws EntityNotFoundException{
         if (get(user.getId())!=null) {
             userRepo.save(user);
             return user;

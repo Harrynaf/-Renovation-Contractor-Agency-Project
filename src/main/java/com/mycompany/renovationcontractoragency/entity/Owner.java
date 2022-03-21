@@ -11,36 +11,14 @@ import java.util.List;
  */
 
 @Entity
-
 public class Owner extends User {
 
     public Owner() {
     }
 
-    public Owner(String vat, String name, String surname, String address, String phone_number, String email, List<Property> properties, String username, String password) {
-        super(username, password);
-        this.vat = vat;
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.phone_number = phone_number;
-        this.email = email;
-        this.properties = properties;
-    }
-
-    public Owner(String vat, String name, String surname, String address, String phone_number, String email, List<Property> properties) {
-        this.vat = vat;
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.phone_number = phone_number;
-        this.email = email;
-        this.properties = properties;
-    }
-
     @Override
     public String toString() {
-        return "Owner{" + "vat=" + vat + ", name=" + name + ", surname=" + surname + ", address=" + address + ", phone_number=" + phone_number + ", email=" + email + ", properties=" + properties + '}';
+        return super.toString()+"Owner{" + "vat=" + vat + ", name=" + name + ", surname=" + surname + ", address=" + address + ", phone_number=" + phone_number + ", email=" + email + ", properties=" + properties + '}';
     }
 
     public String getVat() {
