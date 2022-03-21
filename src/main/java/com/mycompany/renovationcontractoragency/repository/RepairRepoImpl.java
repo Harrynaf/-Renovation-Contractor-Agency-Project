@@ -17,9 +17,6 @@ public class RepairRepoImpl implements RepairRepo{
 
     private EntityManager entityManager;
 
-    private UserRepo userRepo;
-    private PropertyRepo propertyRepo;
-
     public RepairRepoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -33,6 +30,7 @@ public class RepairRepoImpl implements RepairRepo{
     public void delete(Repair repair) {
         ManageEntity.remove(entityManager, repair);
     }
+
     @Override
     public List<Repair> getAll() {
         return entityManager.createQuery("SELECT r FROM Repair r", Repair.class).getResultList();
@@ -65,7 +63,15 @@ public class RepairRepoImpl implements RepairRepo{
                             .getResultList();
     }
 
-   
+    @Override
+    public List<Repair> getRepairByOwnerAndProperty(long ownerId, long propertyId) {
+        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.owner.id = :ownerId and r.property.id = :propertyId", Repair.class)
+                            .setParameter("ownerId", ownerId)
+                            .setParameter("propertyId", propertyId)
+                            .getResultList();
+    }
+
+    @Override
     public boolean checkExists(Repair repair) {
         if (repair.getRepairId() != null) {
             return get(repair.getRepairId()) != null;
