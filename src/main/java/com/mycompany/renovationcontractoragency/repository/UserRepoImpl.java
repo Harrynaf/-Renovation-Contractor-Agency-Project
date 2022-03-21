@@ -14,16 +14,12 @@ public class UserRepoImpl implements UserRepo {
 
     @Override
     public void save(User owner) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(owner);
-        entityManager.getTransaction().commit();
+        ManageEntity.save(entityManager, owner);
     }
 
     @Override
     public void delete(User owner) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(owner);
-        entityManager.getTransaction().commit();
+        ManageEntity.remove(entityManager, owner);
     }
 
     @Override
@@ -37,18 +33,18 @@ public class UserRepoImpl implements UserRepo {
     }
     
     @Override
-    public boolean checkExists(User user) {
+     public boolean findByUsername(User user){
         List<User> resultList = entityManager.createQuery("SELECT s FROM User s WHERE s.username = :username", User.class).setParameter("username", user.getUsername()).getResultList();
         return !resultList.isEmpty();
     }
 
     @Override
-    public User searchByVat(String vat) {
+    public User getByVat(String vat) {
         return entityManager.createQuery("SELECT s FROM Owner s WHERE s.vat = :vat", User.class).setParameter("vat", vat).getSingleResult();
     }
 
     @Override
-    public User searchByEmail(String email) {
+    public User getByEmail(String email) {
         return entityManager.createQuery("SELECT s FROM User s WHERE s.email = :email", User.class).setParameter("email", email).getSingleResult();
     }
 }

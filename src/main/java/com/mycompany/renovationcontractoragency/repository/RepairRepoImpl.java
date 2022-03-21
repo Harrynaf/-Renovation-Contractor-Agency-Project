@@ -26,18 +26,13 @@ public class RepairRepoImpl implements RepairRepo{
 
     @Override
     public void save(Repair repair) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(repair);
-        entityManager.getTransaction().commit();
+        ManageEntity.save(entityManager, repair);
     }
 
     @Override
     public void delete(Repair repair) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(repair);
-        entityManager.getTransaction().commit();
+        ManageEntity.remove(entityManager, repair);
     }
-
     @Override
     public List<Repair> getAll() {
         return entityManager.createQuery("SELECT r FROM Repair r", Repair.class).getResultList();
@@ -70,7 +65,7 @@ public class RepairRepoImpl implements RepairRepo{
                             .getResultList();
     }
 
-    @Override
+   
     public boolean checkExists(Repair repair) {
         if (repair.getRepairId() != null) {
             return get(repair.getRepairId()) != null;

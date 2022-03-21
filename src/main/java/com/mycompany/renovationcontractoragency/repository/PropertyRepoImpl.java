@@ -21,16 +21,12 @@ public class PropertyRepoImpl implements PropertyRepo {
 
     @Override
     public void save(Property property) {
-            entityManager.getTransaction().begin();
-            entityManager.persist(property);
-            entityManager.getTransaction().commit();
+        ManageEntity.save(entityManager, property);
     }
 
     @Override
     public void delete(Property property) {
-            entityManager.getTransaction().begin();
-            entityManager.remove(property);
-            entityManager.getTransaction().commit();
+        ManageEntity.remove(entityManager, property);
     }
     
     @Override
@@ -48,7 +44,7 @@ public class PropertyRepoImpl implements PropertyRepo {
         return entityManager.createQuery("SELECT p FROM Property p WHERE p.owner.vat = :vat",Property.class).setParameter("vat", vat).getResultList();
     }
     
-    @Override
+    
     public boolean checkExists(Property property) {
         List<Property> resultList = entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.getECode()).getResultList();
         return !resultList.isEmpty();

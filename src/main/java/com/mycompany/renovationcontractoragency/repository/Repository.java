@@ -19,5 +19,4 @@ public interface Repository<T> {
 
     T get(long id);
 
-    boolean checkExists(T t);
 }

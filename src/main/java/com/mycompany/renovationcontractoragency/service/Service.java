@@ -14,6 +14,5 @@ public interface Service<T> {
 
     T get(long id);
 
-    boolean checkExists(T t);
 }
 

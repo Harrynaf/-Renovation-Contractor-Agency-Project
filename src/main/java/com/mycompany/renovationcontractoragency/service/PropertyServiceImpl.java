@@ -66,8 +66,8 @@ public class PropertyServiceImpl implements PropertyService {
         return propertyRepo.getByVat(vat);
     }
 
-    @Override
+   
     public boolean checkExists(Property property) {
-        return propertyRepo.checkExists(property);
+        return false;//propertyRepo.checkExists(property);
     }
 }

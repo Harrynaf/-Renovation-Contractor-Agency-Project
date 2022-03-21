@@ -4,19 +4,13 @@
  */
 package com.mycompany.renovationcontractoragency.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
-import lombok.ToString;
 
 /**
  *
  * @author hnafp
  */
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class User implements Serializable {
@@ -25,6 +19,14 @@ public abstract class User implements Serializable {
     private Long id;
     @Column(unique = true)
     private String username;
+
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + '}';
+    }
     private String password;
 
     public User(String username, String password) {

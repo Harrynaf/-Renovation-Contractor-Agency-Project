@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        if (!checkExists(user)) {
+        if (!findByUsername(user)) {
             userRepo.save(user);
             return user;
         } else {
@@ -53,17 +53,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkExists(User user) {
-        return userRepo.checkExists(user);
+    public boolean findByUsername(User user) {
+        return userRepo.findByUsername(user);
     }
 
     @Override
     public User getByVat(String vat) {
-        return userRepo.searchByVat(vat);
+        return userRepo.getByVat(vat);
     }
 
     @Override
     public User getByEmail(String email) {
-        return userRepo.searchByEmail(email);
+        return userRepo.getByEmail(email);
     }
 }

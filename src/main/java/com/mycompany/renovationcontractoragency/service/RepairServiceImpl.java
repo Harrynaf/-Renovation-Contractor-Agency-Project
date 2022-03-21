@@ -25,12 +25,12 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public Repair create(Repair repair) {
         if (!checkExists(repair)) {
-            if (!userRepo.checkExists(repair.getOwner())) {
+            if (!userRepo.findByUsername(repair.getOwner())) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
-            if (!propertyRepo.checkExists(repair.getProperty())) {
-                throw new EntityExistsException(); // TODO Custom Exception
-            }
+//            if (!propertyRepo.findByUsername(repair.getProperty())) {
+//                throw new EntityExistsException(); // TODO Custom Exception
+//            }
             repairRepo.save(repair);
             return repair;
         } else {
@@ -50,12 +50,12 @@ public class RepairServiceImpl implements RepairService {
     @Override
     public Repair update(Repair repair) {
         if (checkExists(repair)) {
-            if (!userRepo.checkExists(repair.getOwner())) {
+            if (!userRepo.findByUsername(repair.getOwner())) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
-            if (!propertyRepo.checkExists(repair.getProperty())) {
-                throw new EntityExistsException(); // TODO Custom Exception
-            }
+//            if (!propertyRepo.findByUsername(repair.getProperty())) {
+//                throw new EntityExistsException(); // TODO Custom Exception
+//            }
             repairRepo.save(repair);
             return repair;
         } else {
@@ -88,8 +88,8 @@ public class RepairServiceImpl implements RepairService {
         return repairRepo.getRepairByOwnerId(id);
     }
 
-    @Override
+    
     public boolean checkExists(Repair repair) {
-        return repairRepo.checkExists(repair);
+        return false;//repairRepo.checkExists(repair);
     }
 }
