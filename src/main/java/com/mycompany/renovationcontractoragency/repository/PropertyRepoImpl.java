@@ -46,7 +46,7 @@ public class PropertyRepoImpl implements PropertyRepo {
     
     
     public boolean checkExists(Property property) {
-        List<Property> resultList = entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.getECode()).getResultList();
+        List<Property> resultList = entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.geteCode()).getResultList();
         return !resultList.isEmpty();
     }
 }
