@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(User user) {
-        if (checkExists(user)) {
+        if (get(user.getId())!=null) {
             userRepo.delete(user);
         } else {
             throw new EntityNotFoundException();
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        if (checkExists(user)) {
+        if (get(user.getId())!=null) {
             userRepo.save(user);
             return user;
         } else {
@@ -58,12 +58,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User searchByVat(String vat) {
+    public User getByVat(String vat) {
         return userRepo.searchByVat(vat);
     }
 
     @Override
-    public User searchByEmail(String email) {
+    public User getByEmail(String email) {
         return userRepo.searchByEmail(email);
     }
 }

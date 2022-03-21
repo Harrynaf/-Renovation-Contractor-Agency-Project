@@ -38,8 +38,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
         try {
-            System.out.println(userService.searchByEmail("harry@mail.com"));
-            System.out.println(userService.searchByVat("123456789"));
+            System.out.println(userService.getByEmail("harry@mail.com"));
+            System.out.println(userService.getByVat("123456789"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
