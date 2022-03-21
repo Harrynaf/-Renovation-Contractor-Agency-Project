@@ -16,3 +16,4 @@ public interface Service<T> {
 
     boolean checkExists(T t);
 }
+
