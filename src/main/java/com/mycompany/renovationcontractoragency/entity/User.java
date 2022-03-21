@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- *
  * @author hnafp
  */
 @Entity
@@ -27,6 +26,7 @@ public abstract class User implements Serializable {
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", password=" + password + '}';
     }
+
     private String password;
 
     public User(String username, String password) {
@@ -57,5 +57,5 @@ public abstract class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
 }

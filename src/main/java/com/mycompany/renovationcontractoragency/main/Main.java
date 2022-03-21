@@ -16,12 +16,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.persistence.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
@@ -38,38 +40,38 @@ public class Main {
 
 
         logger.info("This is a sample log!");
-        logger.info("This is a sample log input date {}",LocalDate.now());
-
+        logger.info("This is a sample log input date {}", LocalDate.now());
 
 
         try {
             userService.create(owner1);
             userService.create(owner2);
+            userService.create(owner3);
             logger.info("All good with creating users");
         } catch (EntityExistsException e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
         try {
             System.out.println(userService.getByEmail("harry@mail.com"));
             System.out.println(userService.getByVat("123456789"));
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
         owner2.setUsername("adsdasdasdasdas");
         try {
             userService.update(owner2);
             userService.update(owner1);
         } catch (EntityNotFoundException e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
         userService.getAll();
         try {
             userService.delete(owner1);
             logger.info("All good with deleting users");
         } catch (EntityNotFoundException e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
-        
+
         System.out.println("--------------------PROPERTY--------------------");
         PropertyRepo propertyRepo = new PropertyRepoImpl(entityManager);
         PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
@@ -83,14 +85,14 @@ public class Main {
             propertyService.create(property2);
             propertyService.create(property3);
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
         System.out.println("---Test GetAll property---");
         try {
             System.out.println(propertyService.getAll());
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
         System.out.println("---Test Update and Get property---");
@@ -99,7 +101,7 @@ public class Main {
             property4.setAddress("Thessaloniki");
             propertyService.update(property4);
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
         System.out.println("---Test Delete and Get property---");
@@ -107,20 +109,20 @@ public class Main {
             Property property5 = propertyService.get(5L);
             propertyService.delete(property5);
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
-        
+
         System.out.println("---Test GetByVat property---");
         try {
             List<Property> properties = propertyService.getByVat("123412789");
-            for(Property property : properties){
+            for (Property property : properties) {
                 System.out.println(property);
             }
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}",e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
-     
+
         System.out.println("--------------------REPAIR--------------------");
         RepairRepo repairRepo = new RepairRepoImpl(entityManager);
         RepairService repairService = new RepairServiceImpl(repairRepo);
@@ -162,8 +164,9 @@ public class Main {
 
         System.out.println("---Test GetRepairByOwnerAndProperty---");
         try {
-            System.out.println(repairService.getRepairByOwnerAndProperty(owner3.getId(), property2.getId()));
-            System.out.println(repairService.getRepairByOwnerAndProperty(owner3.getId(), property1.getId())); // Expecting an empty list
+            System.out.println(repairService.getRepairByOwnerAndProperty(userService.get(3).getId(), propertyService.get(5).getId()));
+            System.out.println(repairService.getRepairByOwnerAndProperty(userService.get(3).getId(), propertyService.get(4).getId())); // Expecting an empty list
+            System.out.println(repairService.getRepairByOwnerAndProperty(propertyService.get(5).getOwner().getId(), propertyService.get(5).getId()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
