@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface PropertyRepo extends Repository<Property> {
     List<Property> getByVat(String vat);
-    boolean findByECode(Property property);
+    Property getByECode(Property property);
 }

@@ -16,20 +16,19 @@ public class PropertyRepoImpl implements PropertyRepo {
     public Property get(long id) {
         return entityManager.find(Property.class, id);
     }
-    
-    @Override
-    public List<Property> getAll() {
-        return entityManager.createQuery("SELECT p FROM Property p",Property.class).getResultList();
-    }
-    
+
     @Override
     public List<Property> getByVat(String vat) {
-        return entityManager.createQuery("SELECT p FROM Property p WHERE p.owner.vat = :vat",Property.class).setParameter("vat", vat).getResultList();
+        return entityManager.createQuery("SELECT p FROM Property p WHERE p.owner.vat = :vat", Property.class).setParameter("vat", vat).getResultList();
     }
-    
+
     @Override
-    public boolean findByECode(Property property) {
-        List<Property> resultList = entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.geteCode()).getResultList();
-        return !resultList.isEmpty();
+    public Property getByECode(Property property) {
+        return entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.geteCode()).getSingleResult();
+    }
+
+    @Override
+    public List<Property> getAll() {
+        return entityManager.createQuery("SELECT p FROM Property p", Property.class).getResultList();
     }
 }

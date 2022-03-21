@@ -11,6 +11,7 @@ import java.util.List;
  *
  * @author Ioannis Psathas
  */
-public interface PropertyService extends Service<Property>{
+public interface PropertyService extends Service<Property> {
     List<Property> getByVat(String vat);
+    boolean foundByECode(Property property);
 }

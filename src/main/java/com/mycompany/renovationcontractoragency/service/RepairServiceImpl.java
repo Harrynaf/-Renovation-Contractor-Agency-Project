@@ -27,7 +27,7 @@ public class RepairServiceImpl implements RepairService {
             if (!userRepo.checkExists(repair.getOwner())) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
-            if (!propertyRepo.findByECode(repair.getProperty())) {
+            if (propertyRepo.getByECode(repair.getProperty())!=null) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
             repairRepo.save(repair);
@@ -52,7 +52,7 @@ public class RepairServiceImpl implements RepairService {
             if (!userRepo.checkExists(repair.getOwner())) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
-            if (!propertyRepo.findByECode(repair.getProperty())) {
+            if (propertyRepo.getByECode(repair.getProperty())!=null) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
             repairRepo.save(repair);
