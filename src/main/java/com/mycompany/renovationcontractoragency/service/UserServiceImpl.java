@@ -8,12 +8,10 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private final EntityManager entityManager;
     private final UserRepo userRepo;
 
-    public UserServiceImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        this.userRepo = new UserRepoImpl(entityManager);
+    public UserServiceImpl(UserRepo UserRepo) {
+        this.userRepo = UserRepo;
     }
 
     @Override

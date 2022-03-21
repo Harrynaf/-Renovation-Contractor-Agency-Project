@@ -29,7 +29,7 @@ public class Main {
         User owner2 = new Owner("123412789", "harry", "Naf", "Athens", "699123423423", "harry@mail.com", "harry", "11111");
 
         UserRepo userRepo = new UserRepoImpl(entityManager);
-        UserService userService = new UserServiceImpl(entityManager);
+        UserService userService = new UserServiceImpl(userRepo);
 
         try {
             userService.create(owner1);
