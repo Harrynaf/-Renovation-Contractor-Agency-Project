@@ -28,7 +28,7 @@ public class RepairRepoImpl implements RepairRepo{
 
     @Override
     public void delete(Repair repair) {
-        ManageEntity.save(entityManager, repair);
+        ManageEntity.remove(entityManager, repair);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class RepairRepoImpl implements RepairRepo{
                             .getResultList();
     }
 
-//    @Override
+    @Override
     public boolean checkExists(Repair repair) {
         if (repair.getRepairId() != null) {
             return get(repair.getRepairId()) != null;
