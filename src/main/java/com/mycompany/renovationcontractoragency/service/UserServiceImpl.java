@@ -2,7 +2,6 @@ package com.mycompany.renovationcontractoragency.service;
 
 import com.mycompany.renovationcontractoragency.entity.User;
 import com.mycompany.renovationcontractoragency.repository.UserRepo;
-import com.mycompany.renovationcontractoragency.repository.UserRepoImpl;
 import javax.persistence.*;
 import java.util.List;
 
