@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class RepairRepoImpl implements RepairRepo{
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public RepairRepoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -69,13 +69,5 @@ public class RepairRepoImpl implements RepairRepo{
                             .setParameter("ownerId", ownerId)
                             .setParameter("propertyId", propertyId)
                             .getResultList();
-    }
-
-    @Override
-    public boolean checkExists(Repair repair) {
-        if (repair.getRepairId() != null) {
-            return get(repair.getRepairId()) != null;
-        }
-        return false;
     }
 }

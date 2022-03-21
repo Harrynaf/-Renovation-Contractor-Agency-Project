@@ -23,7 +23,7 @@ public class RepairServiceImpl implements RepairService {
 
     @Override
     public void delete(Repair repair) throws EntityNotFoundException {
-        if (checkExists(repair)) {
+        if (get(repair.getRepairId())!=null) {
             repairRepo.delete(repair);
         } else {
             throw new EntityNotFoundException();
@@ -32,7 +32,7 @@ public class RepairServiceImpl implements RepairService {
 
     @Override
     public Repair update(Repair repair) throws EntityNotFoundException {
-        if (checkExists(repair)) {
+        if (get(repair.getRepairId())!=null) {
             repairRepo.save(repair);
             return repair;
         } else {
@@ -70,8 +70,4 @@ public class RepairServiceImpl implements RepairService {
         return repairRepo.getRepairByOwnerAndProperty(ownerId, propertyId);
     }
 
-    @Override
-    public boolean checkExists(Repair repair) {
-        return repairRepo.checkExists(repair);
-    }
 }

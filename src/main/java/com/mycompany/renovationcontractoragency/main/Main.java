@@ -1,18 +1,19 @@
 package com.mycompany.renovationcontractoragency.main;
 
 import com.mycompany.renovationcontractoragency.entity.Owner;
+import com.mycompany.renovationcontractoragency.entity.Repair;
 import com.mycompany.renovationcontractoragency.entity.User;
 import com.mycompany.renovationcontractoragency.entity.Property;
 import com.mycompany.renovationcontractoragency.enums.PropertyType;
-import com.mycompany.renovationcontractoragency.repository.PropertyRepo;
-import com.mycompany.renovationcontractoragency.repository.PropertyRepoImpl;
-import com.mycompany.renovationcontractoragency.repository.UserRepo;
-import com.mycompany.renovationcontractoragency.repository.UserRepoImpl;
-import com.mycompany.renovationcontractoragency.service.PropertyService;
-import com.mycompany.renovationcontractoragency.service.PropertyServiceImpl;
-import com.mycompany.renovationcontractoragency.service.UserService;
-import com.mycompany.renovationcontractoragency.service.UserServiceImpl;
+import com.mycompany.renovationcontractoragency.enums.RepairStatus;
+import com.mycompany.renovationcontractoragency.enums.RepairType;
+import com.mycompany.renovationcontractoragency.repository.*;
+import com.mycompany.renovationcontractoragency.service.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.persistence.*;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public class Main {
 
         User owner1 = new Owner("123456789", "John", "Psathas", "Athens", "6991234567", "john@mail.com", "John", "11111");
         User owner2 = new Owner("123412789", "harry", "Naf", "Athens", "699123423423", "harry@mail.com", "harry", "11111");
+        User owner3 = new Owner("123457459", "Aggelos", "Koutsou", "Athens", "6935523423", "aggelos@mail.com", "aggelos", "11111");
 
         UserRepo userRepo = new UserRepoImpl(entityManager);
         UserService userService = new UserServiceImpl(userRepo);
@@ -117,9 +119,71 @@ public class Main {
         } catch (Exception e) {
             logger.error("Something went wrong. Details: {}",e.getMessage());
         }
-        
-        //TODO Need more testing
+
      
         System.out.println("--------------------REPAIR--------------------");
+        RepairRepo repairRepo = new RepairRepoImpl(entityManager);
+        RepairService repairService = new RepairServiceImpl(repairRepo);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        System.out.println("---Test Create repair---");
+        Repair repair1 = new Repair(property1.getOwner(), property1, LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
+        Repair repair2 = new Repair(property2.getOwner(), property2, LocalDateTime.parse("2022-02-15 22:30", formatter), "repairDescription2", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("100.0"), "workToDoDescription2");
+
+        try {
+            repairService.create(repair1);
+            repairService.create(repair2);
+        } catch (EntityExistsException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("---Test GetAll repairs---");
+        try {
+            System.out.println(repairService.getAll());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("---Test Get repair---");
+        try {
+            System.out.println(repairService.get(repair1.getRepairId()));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("---Test GetRepairByDate, GetRepairByDateRange, GetRepairByOwnerId---");
+        try {
+            System.out.println(repairService.getRepairByDate(LocalDateTime.parse("2022-02-15 22:30", formatter)));
+            System.out.println(repairService.getRepairByDateRange(LocalDateTime.parse("2022-01-01 00:00", formatter), LocalDateTime.parse("2022-02-10 00:00", formatter)));
+            System.out.println(repairService.getRepairByOwnerId(userService.getByEmail("aggelos@mail.com").getId()));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("---Test GetRepairByOwnerAndProperty---");
+        try {
+            System.out.println(repairService.getRepairByOwnerAndProperty(owner3.getId(), property2.getId()));
+            System.out.println(repairService.getRepairByOwnerAndProperty(owner3.getId(), property1.getId())); // Expecting an empty list
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("---Test Update repair---");
+        try {
+            repair1.setCost(new BigDecimal("150.0"));
+            repairService.update(repair1);
+
+            repair2.setDescription("dummy description");
+            repairService.update(repair2);
+        } catch (EntityNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("---Test Delete repair---");
+        try {
+            repairService.delete(repair1);
+        } catch (EntityNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
