@@ -13,6 +13,4 @@ public interface Service<T> {
     List<T> getAll();
 
     T get(long id);
-
-    boolean checkExists(T t);
 }
