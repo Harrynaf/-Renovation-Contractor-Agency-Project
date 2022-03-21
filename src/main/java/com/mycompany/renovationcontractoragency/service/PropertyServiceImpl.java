@@ -68,6 +68,6 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public boolean checkExists(Property property) {
-        return propertyRepo.checkExists(property);
+        return propertyRepo.findByECode(property);
     }
 }

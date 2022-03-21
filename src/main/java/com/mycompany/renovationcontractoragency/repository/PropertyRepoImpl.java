@@ -6,33 +6,12 @@ package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.Property;
 import java.util.List;
-import javax.persistence.EntityManager;
 
 /**
  * @author Ioannis Psathas
  */
 public class PropertyRepoImpl implements PropertyRepo {
 
-    private final EntityManager entityManager;
-
-    public PropertyRepoImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    @Override
-    public void save(Property property) {
-            entityManager.getTransaction().begin();
-            entityManager.persist(property);
-            entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public void delete(Property property) {
-            entityManager.getTransaction().begin();
-            entityManager.remove(property);
-            entityManager.getTransaction().commit();
-    }
-    
     @Override
     public Property get(long id) {
         return entityManager.find(Property.class, id);
@@ -49,7 +28,7 @@ public class PropertyRepoImpl implements PropertyRepo {
     }
     
     @Override
-    public boolean checkExists(Property property) {
+    public boolean findByECode(Property property) {
         List<Property> resultList = entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.geteCode()).getResultList();
         return !resultList.isEmpty();
     }

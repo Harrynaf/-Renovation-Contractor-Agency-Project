@@ -5,7 +5,6 @@
 package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.Repair;
-import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,29 +13,6 @@ import java.util.List;
  * @author Agkoutsou
  */
 public class RepairRepoImpl implements RepairRepo{
-
-    private EntityManager entityManager;
-
-    private UserRepo userRepo;
-    private PropertyRepo propertyRepo;
-
-    public RepairRepoImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    @Override
-    public void save(Repair repair) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(repair);
-        entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public void delete(Repair repair) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(repair);
-        entityManager.getTransaction().commit();
-    }
 
     @Override
     public List<Repair> getAll() {

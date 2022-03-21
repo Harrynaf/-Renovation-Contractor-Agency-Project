@@ -18,8 +18,7 @@ public class RepairServiceImpl implements RepairService {
     public RepairServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
         this.userRepo = new UserRepoImpl(entityManager);
-        this.propertyRepo = new PropertyRepoImpl(entityManager);
-        this.repairRepo = new RepairRepoImpl(entityManager);
+        this.repairRepo = new RepairRepoImpl();
     }
 
     @Override
@@ -28,7 +27,7 @@ public class RepairServiceImpl implements RepairService {
             if (!userRepo.checkExists(repair.getOwner())) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
-            if (!propertyRepo.checkExists(repair.getProperty())) {
+            if (!propertyRepo.findByECode(repair.getProperty())) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
             repairRepo.save(repair);
@@ -53,7 +52,7 @@ public class RepairServiceImpl implements RepairService {
             if (!userRepo.checkExists(repair.getOwner())) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
-            if (!propertyRepo.checkExists(repair.getProperty())) {
+            if (!propertyRepo.findByECode(repair.getProperty())) {
                 throw new EntityExistsException(); // TODO Custom Exception
             }
             repairRepo.save(repair);

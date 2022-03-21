@@ -5,19 +5,31 @@
 package com.mycompany.renovationcontractoragency.repository;
 
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  * @author Ioannis Psathas
  */
 public interface Repository<T> {
 
-    void save(T t);
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
+    EntityManager entityManager = emf.createEntityManager();
 
-    void delete(T t);
+    default void save(T t) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(t);
+        entityManager.getTransaction().commit();
+    }
+
+    default void delete(T t) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(t);
+        entityManager.getTransaction().commit();
+    }
 
     List<T> getAll();
 
     T get(long id);
-
-    boolean checkExists(T t);
 }

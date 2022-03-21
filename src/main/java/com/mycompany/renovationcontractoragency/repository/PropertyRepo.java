@@ -11,6 +11,7 @@ import java.util.List;
  *
  * @author Ioannis Psathas
  */
-public interface PropertyRepo extends Repository<Property>{
+public interface PropertyRepo extends Repository<Property> {
     List<Property> getByVat(String vat);
+    boolean findByECode(Property property);
 }
