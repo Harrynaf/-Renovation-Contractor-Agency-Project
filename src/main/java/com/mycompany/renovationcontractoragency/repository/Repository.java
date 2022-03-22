@@ -4,10 +4,10 @@
  */
 package com.mycompany.renovationcontractoragency.repository;
 
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 
 /**
  * @author Ioannis Psathas
@@ -30,6 +30,5 @@ public interface Repository<T> {
     }
 
     List<T> getAll();
-
     T get(long id);
 }

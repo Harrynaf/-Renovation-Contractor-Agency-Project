@@ -10,15 +10,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  *
  * @author Agkoutsou
  */
 @Entity
-@Table(name = "repair", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"ownerId", "propertyId"})})
+@Table(name = "repair", uniqueConstraints = {@UniqueConstraint(columnNames = {"ownerId", "propertyId"})})
 public class Repair implements Serializable {
 
     @Id
@@ -45,11 +43,10 @@ public class Repair implements Serializable {
     @Column(name = "workToDoDescription")
     private String toDoDesc;
 
-    public Repair() {
-    }
+    public Repair() {}
 
-    public Repair(Owner owner, Property property, LocalDateTime date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
-        this.owner = owner;
+    public Repair(Property property, LocalDateTime date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
+        this.owner = property.getOwner();
         this.property = property;
         this.date = date;
         this.description = description;
@@ -132,61 +129,17 @@ public class Repair implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 43 * hash + Objects.hashCode(this.repairId);
-        hash = 43 * hash + Objects.hashCode(this.owner);
-        hash = 43 * hash + Objects.hashCode(this.property);
-        hash = 43 * hash + Objects.hashCode(this.date);
-        hash = 43 * hash + Objects.hashCode(this.description);
-        hash = 43 * hash + Objects.hashCode(this.type);
-        hash = 43 * hash + Objects.hashCode(this.status);
-        hash = 43 * hash + Objects.hashCode(this.cost);
-        hash = 43 * hash + Objects.hashCode(this.toDoDesc);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Repair other = (Repair) obj;
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.toDoDesc, other.toDoDesc)) {
-            return false;
-        }
-        if (!Objects.equals(this.repairId, other.repairId)) {
-            return false;
-        }
-        if (!Objects.equals(this.owner, other.owner)) {
-            return false;
-        }
-        if (!Objects.equals(this.property, other.property)) {
-            return false;
-        }
-        if (!Objects.equals(this.date, other.date)) {
-            return false;
-        }
-        if (this.type != other.type) {
-            return false;
-        }
-        if (this.status != other.status) {
-            return false;
-        }
-        return Objects.equals(this.cost, other.cost);
-    }
-
-    @Override
     public String toString() {
-        return "Repair{" + "repairId=" + repairId + ", owner=" + owner + ", property=" + property + ", date=" + date + ", description=" + description + ", type=" + type + ", status=" + status + ", cost=" + cost + ", toDoDesc=" + toDoDesc + '}';
+        return "Repair{" +
+                "repairId=" + repairId +
+                ", owner=" + owner +
+                ", property=" + property +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                ", status=" + status +
+                ", cost=" + cost +
+                ", toDoDesc='" + toDoDesc + '\'' +
+                '}';
     }
 }
