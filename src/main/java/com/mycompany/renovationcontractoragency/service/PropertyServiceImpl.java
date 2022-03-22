@@ -23,7 +23,8 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     /**
-     * Check if ECode of property exist in repo and if it does throws EntityExistsException else save property 
+     * Check if ECode of property exist in repo and if it does throws
+     * EntityExistsException else save property
      */
     @Override
     public Property create(Property property) {
@@ -36,7 +37,8 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     /**
-     * Check if id of property exist in repo and if it does throws EntityNotFoundException else delete property 
+     * Check if id of property exist in repo and if it does throws
+     * EntityNotFoundException else delete property
      */
     @Override
     public void delete(Property property) {
@@ -46,8 +48,10 @@ public class PropertyServiceImpl implements PropertyService {
             throw new EntityNotFoundException();
         }
     }
+
     /**
-     * Check if id of property exist in repo and if it does not throws EntityNotFoundException else update property 
+     * Check if id of property exist in repo and if it does not throws
+     * EntityNotFoundException else update property
      */
     @Override
     public Property update(Property property) {
@@ -79,6 +83,6 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public boolean foundByECode(Property property) {
-        return propertyRepo.getByECode(property) != null;
+        return !propertyRepo.getByECode(property).isEmpty();
     }
 }
