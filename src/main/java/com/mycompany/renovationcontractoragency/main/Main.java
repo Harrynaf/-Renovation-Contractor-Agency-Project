@@ -25,11 +25,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        createData();
-       // updateUsers();
-        //deleteUsers();
+       // createData();
+        updateUsers();
+        deleteUsers();
 
     }
+
+
 
     public static void createData() {
         UserRepo userRepo = new UserRepoImpl();
@@ -84,7 +86,6 @@ public class Main {
         } catch (EntityExistsException e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
-        System.out.println(propertyService.get(1L).getRepairs().toString());
     }
 
     public static void updateUsers() {
@@ -115,10 +116,10 @@ public class Main {
 
         //propertyService.get(1L).setRepairs(entityManager.find(Repair.class, );
 
-       // propertyService.delete(propertyService.get(1L));
+        // propertyService.delete(propertyService.get(1L));
         //userService.delete(userService.get(1L));
         //userService.delete(userService.get(2));
-       // userService.delete(userService.get(3));
+        // userService.delete(userService.get(3));
 
     }
 }
