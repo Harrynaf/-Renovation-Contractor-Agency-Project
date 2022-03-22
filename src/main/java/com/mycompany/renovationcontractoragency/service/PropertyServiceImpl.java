@@ -22,9 +22,12 @@ public class PropertyServiceImpl implements PropertyService {
         this.propertyRepo = propertyRepo;
     }
 
+    /**
+     * Check if ECode of property exist in repo and if it does throws EntityExistsException else save property 
+     */
     @Override
     public Property create(Property property) {
-        if (!checkExists(property)) {
+        if (!foundByECode(property)) {
             propertyRepo.save(property);
             return property;
         } else {
@@ -32,30 +35,35 @@ public class PropertyServiceImpl implements PropertyService {
         }
     }
 
+    /**
+     * Check if id of property exist in repo and if it does throws EntityNotFoundException else delete property 
+     */
     @Override
     public void delete(Property property) {
-        if (checkExists(property)) {
+        if (get(property.getId()) != null) {
             propertyRepo.delete(property);
         } else {
             throw new EntityNotFoundException();
         }
     }
-
+    /**
+     * Check if id of property exist in repo and if it does not throws EntityNotFoundException else update property 
+     */
     @Override
     public Property update(Property property) {
-        if (checkExists(property)) {
+        if (get(property.getId()) != null) {
             propertyRepo.save(property);
             return property;
         } else {
             throw new EntityNotFoundException();
         }
     }
-    
+
     @Override
     public Property get(long id) {
         return propertyRepo.get(id);
     }
-    
+
     @Override
     public List<Property> getAll() {
         return propertyRepo.getAll();
@@ -66,8 +74,11 @@ public class PropertyServiceImpl implements PropertyService {
         return propertyRepo.getByVat(vat);
     }
 
-   
-    public boolean checkExists(Property property) {
-        return false;//propertyRepo.checkExists(property);
+    /**
+     * Check if ECode of property exist in repo
+     */
+    @Override
+    public boolean foundByECode(Property property) {
+        return propertyRepo.getByECode(property) != null;
     }
 }
