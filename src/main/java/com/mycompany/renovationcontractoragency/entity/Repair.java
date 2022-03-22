@@ -24,7 +24,7 @@ public class Repair implements Serializable {
     private Long repairId;
     @ManyToOne
     @JoinColumn(name = "ownerId", referencedColumnName = "id")
-    private Owner owner;
+    private User owner;
     @ManyToOne
     @JoinColumn(name = "propertyId", referencedColumnName = "id", unique = true)
     private Property property;
@@ -64,11 +64,11 @@ public class Repair implements Serializable {
         this.repairId = repairId;
     }
 
-    public Owner getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 

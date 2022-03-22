@@ -32,7 +32,7 @@ public class Property implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private PropertyType type;
     @ManyToOne
-    private Owner owner;
+    private User owner;
     @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Repair> repairs;
 
@@ -42,7 +42,7 @@ public class Property implements Serializable {
     /**
      * Constructor without id
      */
-    public Property(String eCode, String address, LocalDate constructionYear, PropertyType type, Owner owner) {
+    public Property(String eCode, String address, LocalDate constructionYear, PropertyType type, User owner) {
         this.eCode = eCode;
         this.address = address;
         this.constructionYear = constructionYear;
@@ -90,11 +90,11 @@ public class Property implements Serializable {
         this.type = type;
     }
 
-    public Owner getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 

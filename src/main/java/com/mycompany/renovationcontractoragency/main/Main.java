@@ -1,12 +1,10 @@
 package com.mycompany.renovationcontractoragency.main;
 
-import com.mycompany.renovationcontractoragency.entity.Owner;
-import com.mycompany.renovationcontractoragency.entity.Repair;
-import com.mycompany.renovationcontractoragency.entity.User;
-import com.mycompany.renovationcontractoragency.entity.Property;
+import com.mycompany.renovationcontractoragency.entity.*;
 import com.mycompany.renovationcontractoragency.enums.PropertyType;
 import com.mycompany.renovationcontractoragency.enums.RepairStatus;
 import com.mycompany.renovationcontractoragency.enums.RepairType;
+import com.mycompany.renovationcontractoragency.enums.User_Type;
 import com.mycompany.renovationcontractoragency.repository.*;
 import com.mycompany.renovationcontractoragency.service.*;
 
@@ -26,14 +24,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-      //  EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
-      //  EntityManager entityManager = emf.createEntityManager();
-
+        //  EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
+        //  EntityManager entityManager = emf.createEntityManager();
         System.out.println("--------------------USER--------------------");
 
-        User owner1 = new Owner("123456789", "John", "Psathas", "Athens", "6991234567", "john@mail.com", "John", "11111");
-        User owner2 = new Owner("123412789", "harry", "Naf", "Athens", "699123423423", "harry@mail.com", "harry", "11111");
-        User owner3 = new Owner("123457459", "Aggelos", "Koutsou", "Athens", "6935523423", "aggelos@mail.com", "aggelos", "11111");
+        User owner1 = new User("John", "Psathas", "123456789", "Athens", "6991234567", "john@mail.com", "John", "ddsds", User_Type.OWNER);
+        User owner2 = new User("123412789", "harry", "Naf", "Athens", "699123423423", "harry@mail.com", "harry", "1111sdd1", User_Type.OWNER);
+        User owner3 = new User("123457459", "Aggelos", "Koutsou", "Athens", "6935523423", "aggelos@mail.com", "aggelos", "11sd111", User_Type.OWNER);
+        User admin = new User("412412412", "Admin", "admin", "Athens", "6935523423", "aggelos@mail.com", "xcxc", "xccxss", User_Type.ADMIN);
 
         UserRepo userRepo = new UserRepoImpl();
         UserService userService = new UserServiceImpl(userRepo);
@@ -44,13 +42,16 @@ public class Main {
 
 
         try {
+            userService.create(admin);
             userService.create(owner1);
             userService.create(owner2);
             userService.create(owner3);
+
             logger.info("All good with creating users");
         } catch (EntityExistsException e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
+
         try {
             System.out.println(userService.getByEmail("harry@mail.com"));
             System.out.println(userService.getByVat("123456789"));
@@ -66,7 +67,7 @@ public class Main {
         }
         userService.getAll();
         try {
-            userService.delete(owner1);
+            userService.delete(owner2);
             logger.info("All good with deleting users");
         } catch (EntityNotFoundException e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
@@ -77,9 +78,9 @@ public class Main {
         PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
 
         System.out.println("---Test Create property---");
-        Property property1 = new Property("E9_1", "Athens", LocalDate.of(2021, 1, 1), PropertyType.APARTMENT_BUILDING, (Owner) userRepo.get(1L));
-        Property property2 = new Property("E9_2", "Athens", LocalDate.of(2021, 1, 1), PropertyType.MAISONETTE, (Owner) userRepo.get(2L));
-        Property property3 = new Property("E9_3", "Athens", LocalDate.of(2021, 1, 1), PropertyType.DETACHED_HOUSE, (Owner) userRepo.get(2L));
+        Property property1 = new Property("E9_1", "Athens", LocalDate.of(2021, 1, 1), PropertyType.APARTMENT_BUILDING, userRepo.get(1L));
+        Property property2 = new Property("E9_2", "Athens", LocalDate.of(2021, 1, 1), PropertyType.MAISONETTE, userRepo.get(2L));
+        Property property3 = new Property("E9_3", "Athens", LocalDate.of(2021, 1, 1), PropertyType.DETACHED_HOUSE, userRepo.get(2L));
         try {
             propertyService.create(property1);
             propertyService.create(property2);
@@ -130,11 +131,11 @@ public class Main {
 
         System.out.println("---Test Create repair---");
         Repair repair1 = new Repair(propertyService.get(6), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
-      //  Repair repair2 = new Repair(propertyService.get(6).getOwner(), propertyService.get(6), LocalDateTime.parse("2022-02-15 22:30", formatter), "repairDescription2", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("100.0"), "workToDoDescription2");
+        Repair repair2 = new Repair(propertyService.get(7), LocalDateTime.parse("2022-02-15 22:30", formatter), "repairDescription2", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("100.0"), "workToDoDescription2");
 
         try {
             repairService.create(repair1);
-        //    repairService.create(repair2);
+            repairService.create(repair2);
         } catch (EntityExistsException e) {
             System.out.println(e.getMessage());
         }
@@ -174,10 +175,10 @@ public class Main {
         System.out.println("---Test Update repair---");
         try {
             repair1.setCost(new BigDecimal("150.0"));
-            repairService.update(repair1);
+            repairService.update(repairService.get(8));
 
-           // repair2.setDescription("dummy description");
-          //  repairService.update(repair2);
+             repair2.setDescription("dummy description");
+              repairService.update(repairService.get(9));
         } catch (EntityNotFoundException e) {
             System.out.println(e.getMessage());
         }
