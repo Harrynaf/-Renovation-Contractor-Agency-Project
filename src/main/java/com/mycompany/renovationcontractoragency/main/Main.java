@@ -73,7 +73,7 @@ public class Main {
         }
 
         System.out.println("--------------------PROPERTY--------------------");
-        PropertyRepo propertyRepo = new PropertyRepoImpl();
+        PropertyRepo propertyRepo = new PropertyRepoImpl(entityManager);
         PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
 
         System.out.println("---Test Create property---");
