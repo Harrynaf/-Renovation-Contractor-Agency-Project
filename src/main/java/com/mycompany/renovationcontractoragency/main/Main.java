@@ -161,8 +161,8 @@ public class Main {
         RepairRepo repairRepo = new RepairRepoImpl();
         RepairService repairService = new RepairServiceImpl(repairRepo);
 
-        User owner1 = new User("123456789", "John", "Psathas", "Athens", "6991234567", "john@mail.com", "John", "11111", User_Type.OWNER);
-        User owner2 = new User("123412789", "harry", "Naf", "Athens", "699123423423", "harry@mail.com", "harry", "11111", User_Type.OWNER);
+        User owner1 = new User("123456789", "John", "Psathas", "Athens", "6991234567", "john@mail.com", "john", "11111", User_Type.OWNER);
+        User owner2 = new User("123412789", "Harry", "Naf", "Athens", "6991234234", "harry@mail.com", "harry", "11111", User_Type.OWNER);
         User owner3 = new User("123457459", "Aggelos", "Koutsou", "Athens", "6935523423", "aggelos@mail.com", "aggelos", "11111", User_Type.OWNER);
 
         logger.info("This is a sample log!");
@@ -194,10 +194,14 @@ public class Main {
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Repair repair1 = new Repair(propertyRepo.get(4L), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
+        Repair repair1 = new Repair(property1, LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
+        Repair repair2 = new Repair(property2, LocalDateTime.parse("2022-02-15 10:30", formatter), "repairDescription2", RepairType.FRAMES, RepairStatus.COMPLETE, new BigDecimal("100.0"), "workToDoDescription2");
+        Repair repair3 = new Repair(property3, LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
 
         try {
             repairService.create(repair1);
+            repairService.create(repair2);
+            repairService.create(repair3);
             logger.info("All good with creating repair data");
         } catch (EntityExistsException e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
