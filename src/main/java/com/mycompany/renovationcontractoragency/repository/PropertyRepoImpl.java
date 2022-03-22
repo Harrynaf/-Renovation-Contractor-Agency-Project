@@ -13,11 +13,6 @@ import java.util.List;
  * @author Ioannis Psathas
  */
 public class PropertyRepoImpl implements PropertyRepo {
-    private final EntityManager entityManager;
-
-    public PropertyRepoImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
 
     @Override
     public Property get(long id) {
@@ -32,16 +27,6 @@ public class PropertyRepoImpl implements PropertyRepo {
     @Override
     public Property getByECode(Property property) {
         return entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.geteCode()).getSingleResult();
-    }
-
-    @Override
-    public void save(Property property) {
-        ManageEntity.save(entityManager, property);
-    }
-
-    @Override
-    public void delete(Property property) {
-        ManageEntity.remove(entityManager, property);
     }
 
     @Override

@@ -1,26 +1,12 @@
 package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.User;
+
 import java.util.List;
-import javax.persistence.EntityManager;
+
 
 public class UserRepoImpl implements UserRepo {
 
-    private final EntityManager entityManager;
-
-    public UserRepoImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    @Override
-    public void save(User owner) {
-        ManageEntity.save(entityManager, owner);
-    }
-
-    @Override
-    public void delete(User owner) {
-        ManageEntity.remove(entityManager, owner);
-    }
 
     @Override
     public List<User> getAll() {
@@ -34,17 +20,19 @@ public class UserRepoImpl implements UserRepo {
 
     /**
      * Finds user by username and returns boolean
+     *
      * @param user
      * @return
      */
     @Override
-     public boolean findByUsername(User user){
+    public boolean findByUsername(User user) {
         List<User> resultList = entityManager.createQuery("SELECT s FROM User s WHERE s.username = :username", User.class).setParameter("username", user.getUsername()).getResultList();
         return !resultList.isEmpty();
     }
 
     /**
      * Finds and returns a user by vat
+     *
      * @param vat
      * @return
      */
@@ -55,6 +43,7 @@ public class UserRepoImpl implements UserRepo {
 
     /**
      * Finds and returns a user by email
+     *
      * @param email
      * @return
      */

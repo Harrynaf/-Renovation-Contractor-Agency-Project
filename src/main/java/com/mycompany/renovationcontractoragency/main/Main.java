@@ -26,8 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
-        EntityManager entityManager = emf.createEntityManager();
+      //  EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
+      //  EntityManager entityManager = emf.createEntityManager();
 
         System.out.println("--------------------USER--------------------");
 
@@ -35,7 +35,7 @@ public class Main {
         User owner2 = new Owner("123412789", "harry", "Naf", "Athens", "699123423423", "harry@mail.com", "harry", "11111");
         User owner3 = new Owner("123457459", "Aggelos", "Koutsou", "Athens", "6935523423", "aggelos@mail.com", "aggelos", "11111");
 
-        UserRepo userRepo = new UserRepoImpl(entityManager);
+        UserRepo userRepo = new UserRepoImpl();
         UserService userService = new UserServiceImpl(userRepo);
 
 
@@ -73,11 +73,11 @@ public class Main {
         }
 
         System.out.println("--------------------PROPERTY--------------------");
-        PropertyRepo propertyRepo = new PropertyRepoImpl(entityManager);
+        PropertyRepo propertyRepo = new PropertyRepoImpl();
         PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
 
         System.out.println("---Test Create property---");
-        Property property1 = new Property("E9_1", "Athens", LocalDate.of(2021, 1, 1), PropertyType.APARTMENT_BUILDING, (Owner) userRepo.get(2L));
+        Property property1 = new Property("E9_1", "Athens", LocalDate.of(2021, 1, 1), PropertyType.APARTMENT_BUILDING, (Owner) userRepo.get(1L));
         Property property2 = new Property("E9_2", "Athens", LocalDate.of(2021, 1, 1), PropertyType.MAISONETTE, (Owner) userRepo.get(2L));
         Property property3 = new Property("E9_3", "Athens", LocalDate.of(2021, 1, 1), PropertyType.DETACHED_HOUSE, (Owner) userRepo.get(2L));
         try {
@@ -124,13 +124,13 @@ public class Main {
 
 
         System.out.println("--------------------REPAIR--------------------");
-        RepairRepo repairRepo = new RepairRepoImpl(entityManager);
+        RepairRepo repairRepo = new RepairRepoImpl();
         RepairService repairService = new RepairServiceImpl(repairRepo);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         System.out.println("---Test Create repair---");
-        Repair repair1 = new Repair(property1.getOwner(), property1, LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
-        Repair repair2 = new Repair(property2.getOwner(), property2, LocalDateTime.parse("2022-02-15 22:30", formatter), "repairDescription2", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("100.0"), "workToDoDescription2");
+        Repair repair1 = new Repair(propertyService.get(1).getOwner(), propertyService.get(1), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
+        Repair repair2 = new Repair(propertyService.get(2).getOwner(), propertyService.get(2), LocalDateTime.parse("2022-02-15 22:30", formatter), "repairDescription2", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("100.0"), "workToDoDescription2");
 
         try {
             repairService.create(repair1);
