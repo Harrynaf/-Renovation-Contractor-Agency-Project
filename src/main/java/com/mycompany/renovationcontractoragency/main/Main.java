@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.persistence.*;
 
 import org.slf4j.Logger;
@@ -22,26 +23,38 @@ import org.slf4j.LoggerFactory;
 public class Main {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static void main(String[] args) {
 
-       // createData();
-        updateUsers();
-        deleteUsers();
-
-    }
-
-
-
-    public static void createData() {
         UserRepo userRepo = new UserRepoImpl();
         UserService userService = new UserServiceImpl(userRepo);
+
+        PropertyRepo propertyRepo = new PropertyRepoImpl();
+        PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
 
         RepairRepo repairRepo = new RepairRepoImpl();
         RepairService repairService = new RepairServiceImpl(repairRepo);
 
-        PropertyRepo propertyRepo = new PropertyRepoImpl();
-        PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
+        // DATA CREATION TEST
+        createData(userService, propertyService, repairService);
+
+        // Property TEST
+        updateProperty(propertyService);
+        getAllProperty(propertyService);
+        deleteProperty(propertyService);
+
+        // REPAIR TEST
+        getAllRepair(repairService);
+        getRepairByDate(repairService);
+        getRepairByDateRange(repairService);
+        getRepairByOwnerId(repairService);
+        getRepairByPropertyId(repairService);
+        updateRepair(repairService);
+        deleteRepair(repairService);
+
+    }
+    public static void createData(UserService userService, PropertyService propertyService, RepairService repairService) {
 
         User owner1 = new User("123456789", "John", "Psathas", "Athens", "6991234567", "john@mail.com", "john", "11111", User_Type.OWNER);
         User owner2 = new User("123412789", "Harry", "Naf", "Athens", "6991234234", "harry@mail.com", "harry", "11111", User_Type.OWNER);
@@ -59,7 +72,6 @@ public class Main {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
-
         Property property1 = new Property("E9_1", "Athens", LocalDate.of(2021, 1, 1), PropertyType.APARTMENT_BUILDING, userService.get(1L));
         Property property2 = new Property("E9_2", "Athens", LocalDate.of(2021, 1, 1), PropertyType.MAISONETTE, userService.get(2L));
         Property property3 = new Property("E9_3", "Athens", LocalDate.of(2021, 1, 1), PropertyType.DETACHED_HOUSE, userService.get(3L));
@@ -73,10 +85,9 @@ public class Main {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Repair repair1 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
-        Repair repair2 = new Repair(propertyService.get(2L), LocalDateTime.parse("2022-02-15 10:30", formatter), "repairDescription2", RepairType.FRAMES, RepairStatus.COMPLETE, new BigDecimal("100.0"), "workToDoDescription2");
-        Repair repair3 = new Repair(propertyService.get(3L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
+        Repair repair1 = new Repair(propertyService.get(4L), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
+        Repair repair2 = new Repair(propertyService.get(5L), LocalDateTime.parse("2022-02-15 10:30", formatter), "repairDescription2", RepairType.FRAMES, RepairStatus.COMPLETE, new BigDecimal("100.0"), "workToDoDescription2");
+        Repair repair3 = new Repair(propertyService.get(6L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
 
         try {
             repairService.create(repair1);
@@ -87,39 +98,109 @@ public class Main {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
-
-    public static void updateUsers() {
-        UserRepo userRepo = new UserRepoImpl();
-        UserService userService = new UserServiceImpl(userRepo);
-
-        userService.get(1).setUsername("Changed Username");
-        userService.update(userService.get(1));
-        userService.get(2).setAddress("Changed Address");
-        userService.update(userService.get(2));
-        userService.get(2).setUser_Type(User_Type.ADMIN);
-        userService.update(userService.get(2));
-
+    public static void updateProperty(PropertyService propertyService) {
+        try {
+            Property property4 = propertyService.get(4L);
+            property4.setAddress("Thessaloniki");
+            propertyService.update(property4);
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
     }
 
-    public static void deleteUsers() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
-        EntityManager entityManager = emf.createEntityManager();
+    public static void getAllProperty(PropertyService propertyService) {
+        try {
+            List<Property> properties = propertyService.getByVat("123412789");
+            for (Property property : properties) {
+                System.out.println(property);
+            }
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
 
-        UserRepo userRepo = new UserRepoImpl();
-        UserService userService = new UserServiceImpl(userRepo);
+    public static void deleteProperty(PropertyService propertyService) {
+        try {
+            Property property5 = propertyService.get(5L);
+            propertyService.delete(property5);
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
 
-        RepairRepo repairRepo = new RepairRepoImpl();
-        RepairService repairService = new RepairServiceImpl(repairRepo);
+    public static void getAllRepair(RepairService repairService) {
+        try {
+            List<Repair> repairs = repairService.getAll();
+            for (Repair repair : repairs) {
+                System.out.println(repair);
+            }
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
 
-        PropertyRepo propertyRepo = new PropertyRepoImpl();
-        PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
+    public static void getRepairByDate(RepairService repairService) {
+        try {
+            List<Repair> repairs = repairService.getRepairByDate(LocalDateTime.parse("2022-02-15 10:30", formatter));
+            for (Repair repair : repairs) {
+                System.out.println(repair);
+            }
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
 
-        //propertyService.get(1L).setRepairs(entityManager.find(Repair.class, );
+    public static void getRepairByDateRange(RepairService repairService) {
+        try {
+            List<Repair> repairs = repairService.getRepairByDateRange(LocalDateTime.parse("2022-01-01 00:00", formatter), LocalDateTime.parse("2022-03-01 00:00", formatter));
+            for (Repair repair : repairs) {
+                System.out.println(repair);
+            }
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
 
-        // propertyService.delete(propertyService.get(1L));
-        //userService.delete(userService.get(1L));
-        //userService.delete(userService.get(2));
-        // userService.delete(userService.get(3));
+    public static void getRepairByOwnerId(RepairService repairService) {
+        try {
+            List<Repair> repairs = repairService.getRepairByOwnerId(repairService.get(7L).getOwner().getId());
+            for (Repair repair : repairs) {
+                System.out.println(repair);
+            }
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
 
+    public static void getRepairByPropertyId(RepairService repairService) {
+        try {
+            List<Repair> repairs = repairService.getRepairByPropertyId(repairService.get(8L).getProperty().getId());
+            for (Repair repair : repairs) {
+                System.out.println(repair);
+            }
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+
+    public static void updateRepair(RepairService repairService) {
+        try {
+            Repair repair2 = repairService.get(7L);
+            repair2.setStatus(RepairStatus.STANDBY_MODE);
+            repairService.update(repair2);
+            logger.info("All good with updating repair data");
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+
+    public static void deleteRepair(RepairService repairService) {
+        try {
+            Repair repair1 = repairService.get(8L);
+            repairService.delete(repair1);
+            logger.info("All good with deleting repair data");
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
     }
 }
