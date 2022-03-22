@@ -128,14 +128,14 @@ public class Repair implements Serializable {
 
     @Override
     public String toString() {
-        return "Repair{" +
-                "repairId=" + repairId +
-                ", date=" + date +
-                ", description='" + description + '\'' +
-                ", type=" + type +
-                ", status=" + status +
-                ", cost=" + cost +
-                ", toDoDesc='" + toDoDesc + '\'' +
-                '}';
+        return "Repair{" + "repairId=" + repairId + 
+                ", ownerId=" + owner.getId() + 
+                ", propertyId=" + property.getId() + 
+                ", date=" + date + 
+                ", description=" + description + 
+                ", type=" + type + 
+                ", status=" + status + 
+                ", cost=" + cost + 
+                ", toDoDesc=" + toDoDesc + '}';
     }
 }

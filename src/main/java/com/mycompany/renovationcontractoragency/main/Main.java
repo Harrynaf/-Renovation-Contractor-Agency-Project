@@ -37,7 +37,7 @@ public class Main {
         RepairService repairService = new RepairServiceImpl(repairRepo);
 
 //        //---DATA CREATION TEST---
-        createData(userService, propertyService, repairService);
+//        createData(userService, propertyService, repairService);
 
 //        //---USER TEST---
 //        updateUser(userService);
@@ -99,11 +99,12 @@ public class Main {
 
         Repair repair1 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
         Repair repair2 = new Repair(propertyService.get(2L), LocalDateTime.parse("2022-02-15 10:30", formatter), "repairDescription2", RepairType.FRAMES, RepairStatus.COMPLETE, new BigDecimal("100.0"), "workToDoDescription2");
-        Repair repair3 = new Repair(propertyService.get(3L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
-        Repair repair4 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
-        Repair repair5 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
-        Repair repair6 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
-        Repair repair7 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
+        Repair repair3 = new Repair(propertyService.get(3L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.INSULATION, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
+        Repair repair4 = new Repair(propertyService.get(4L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription4", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("350.0"), "workToDoDescription4");
+        Repair repair5 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription5", RepairType.PAINTING, RepairStatus.PENDING, new BigDecimal("450.0"), "workToDoDescription5");
+        Repair repair6 = new Repair(propertyService.get(2L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription6", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("365.0"), "workToDoDescription6");
+        Repair repair7 = new Repair(propertyService.get(3L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription7", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("700.0"), "workToDoDescription7");
+        Repair repair8 = new Repair(propertyService.get(4L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription8", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("130.0"), "workToDoDescription8");
 
         try {
             repairService.create(repair1);
@@ -113,6 +114,7 @@ public class Main {
             repairService.create(repair5);
             repairService.create(repair6);
             repairService.create(repair7);
+            repairService.create(repair8);
             logger.info("All good with creating repair data");
         } catch (EntityExistsException e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
@@ -168,7 +170,7 @@ public class Main {
     
     public static void updateProperty(PropertyService propertyService) {
         try {
-            Property property = propertyService.get(1L);
+            Property property = propertyService.get(2L);
             property.setAddress("Thessaloniki");
             propertyService.update(property);
             logger.info("All good with updating property data");
@@ -179,7 +181,7 @@ public class Main {
     
     public static void getPropertyById(PropertyService propertyService) {
         try {
-            Property property = propertyService.get(1L);
+            Property property = propertyService.get(2L);
             System.out.println(property);
             logger.info("All good with getting property data by ID");
         } catch (Exception e) {
@@ -244,7 +246,7 @@ public class Main {
 
     public static void getRepairByDateRange(RepairService repairService) {
         try {
-            List<Repair> repairs = repairService.getRepairByDateRange(LocalDateTime.parse("2022-01-01 00:00", formatter), LocalDateTime.parse("2022-03-01 00:00", formatter));
+            List<Repair> repairs = repairService.getRepairByDateRange(LocalDateTime.parse("2020-03-20 10:30", formatter), LocalDateTime.parse("2023-03-01 00:00", formatter));
             for (Repair repair : repairs) {
                 System.out.println(repair);
             }
@@ -255,7 +257,7 @@ public class Main {
 
     public static void getRepairByOwnerId(RepairService repairService) {
         try {
-            List<Repair> repairs = repairService.getRepairByOwnerId(repairService.get(1L).getOwner().getId());
+            List<Repair> repairs = repairService.getRepairByOwnerId(repairService.get(3L).getOwner().getId());
             for (Repair repair : repairs) {
                 System.out.println(repair);
             }
@@ -266,7 +268,7 @@ public class Main {
 
     public static void getRepairByPropertyId(RepairService repairService) {
         try {
-            List<Repair> repairs = repairService.getRepairByPropertyId(repairService.get(2L).getProperty().getId());
+            List<Repair> repairs = repairService.getRepairByPropertyId(repairService.get(3L).getProperty().getId());
             for (Repair repair : repairs) {
                 System.out.println(repair);
             }
@@ -277,7 +279,7 @@ public class Main {
 
     public static void updateRepair(RepairService repairService) {
         try {
-            Repair repair2 = repairService.get(1L);
+            Repair repair2 = repairService.get(3L);
             repair2.setStatus(RepairStatus.STANDBY_MODE);
             repairService.update(repair2);
             logger.info("All good with updating repair data");
@@ -288,7 +290,7 @@ public class Main {
 
     public static void deleteRepair(RepairService repairService) {
         try {
-            Repair repair1 = repairService.get(2L);
+            Repair repair1 = repairService.get(4L);
             repairService.delete(repair1);
             logger.info("All good with deleting repair data");
         } catch (Exception e) {

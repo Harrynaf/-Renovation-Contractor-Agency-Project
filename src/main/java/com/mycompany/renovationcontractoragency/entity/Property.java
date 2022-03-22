@@ -166,6 +166,6 @@ public class Property implements Serializable {
                 ", constructionYear=" + constructionYear + 
                 ", type=" + type + 
                 ", ownerId=" + owner.getId() + 
-                ", repairId=" + repairs + '}';
+                ", repairs=" + repairs + '}';
     }
 }
