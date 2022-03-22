@@ -132,8 +132,6 @@ public class Repair implements Serializable {
     public String toString() {
         return "Repair{" +
                 "repairId=" + repairId +
-               // ", owner=" + owner +
-                ", property=" + property +
                 ", date=" + date +
                 ", description='" + description + '\'' +
                 ", type=" + type +

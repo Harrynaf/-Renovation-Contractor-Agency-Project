@@ -165,6 +165,6 @@ public class Property implements Serializable {
 
     @Override
     public String toString() {
-        return "Property{" + "id=" + id + ", eCode=" + eCode + ", address=" + address + ", constructionYear=" + constructionYear + ", type=" + type + ", owner=" + owner + ", repairs=" + repairs + '}';
+        return "Property{" + "id=" + id + ", eCode=" + eCode + ", address=" + address + ", constructionYear=" + constructionYear + ", type=" + type + ", repairs=" + repairs + '}';
     }
 }
