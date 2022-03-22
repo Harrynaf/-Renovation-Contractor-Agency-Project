@@ -11,6 +11,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 /**
+ * An implementation of PropertyService
  *
  * @author Ioannis Psathas
  */
@@ -25,6 +26,9 @@ public class PropertyServiceImpl implements PropertyService {
     /**
      * Check if ECode of property exist in repo and if it does throws
      * EntityExistsException else save property
+     *
+     * @param property
+     * @return property
      */
     @Override
     public Property create(Property property) {
@@ -39,6 +43,8 @@ public class PropertyServiceImpl implements PropertyService {
     /**
      * Check if id of property exist in repo and if it does throws
      * EntityNotFoundException else delete property
+     *
+     * @param property
      */
     @Override
     public void delete(Property property) {
@@ -52,6 +58,9 @@ public class PropertyServiceImpl implements PropertyService {
     /**
      * Check if id of property exist in repo and if it does not throws
      * EntityNotFoundException else update property
+     *
+     * @param property
+     * @return property
      */
     @Override
     public Property update(Property property) {
@@ -63,23 +72,43 @@ public class PropertyServiceImpl implements PropertyService {
         }
     }
 
+    /**
+     * Returns a property with given id
+     *
+     * @param property id as long
+     * @return property
+     */
     @Override
     public Property get(long id) {
         return propertyRepo.get(id);
     }
 
+    /**
+     * Retuns a list with all properties
+     *
+     * @return List of propeties
+     */
     @Override
     public List<Property> getAll() {
         return propertyRepo.getAll();
     }
 
+    /**
+     * Returns a list of properties with given vat
+     *
+     * @param owners vat number as String
+     * @return List of properties
+     */
     @Override
     public List<Property> getByVat(String vat) {
         return propertyRepo.getByVat(vat);
     }
 
     /**
-     * Check if ECode of property exist in repo
+     * Check if ECode of property exist in repo and returns boolean
+     *
+     * @param property
+     * @return boolean
      */
     @Override
     public boolean foundByECode(Property property) {
