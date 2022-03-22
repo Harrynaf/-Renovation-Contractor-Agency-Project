@@ -23,9 +23,8 @@ public class PropertyRepoImpl implements PropertyRepo {
     }
 
     @Override
-    public boolean getByECode(Property property) {
-        List<Property> resultList =  entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.geteCode()).getResultList();
-        return !resultList.isEmpty();
+    public List<Property> getByECode(String eCode) {
+        return entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", eCode).getResultList();
     }
 
     @Override
