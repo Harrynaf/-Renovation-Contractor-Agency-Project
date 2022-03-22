@@ -5,8 +5,6 @@
 package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.Property;
-
-import javax.persistence.EntityManager;
 import java.util.List;
 
 /**

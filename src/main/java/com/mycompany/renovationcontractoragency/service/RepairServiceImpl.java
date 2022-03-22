@@ -69,5 +69,4 @@ public class RepairServiceImpl implements RepairService {
     public List<Repair> getRepairByOwnerAndProperty(long ownerId, long propertyId) {
         return repairRepo.getRepairByOwnerAndProperty(ownerId, propertyId);
     }
-
 }
