@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class RepairRepoImpl implements RepairRepo {
 
-
     @Override
     public List<Repair> getAll() {
         return entityManager.createQuery("SELECT r FROM Repair r", Repair.class).getResultList();
@@ -28,30 +27,37 @@ public class RepairRepoImpl implements RepairRepo {
     @Override
     public List<Repair> getRepairByDate(LocalDateTime date) {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.date = :date", Repair.class)
-                .setParameter("date", date)
-                .getResultList();
+                            .setParameter("date", date)
+                            .getResultList();
     }
 
     @Override
     public List<Repair> getRepairByDateRange(LocalDateTime dateFrom, LocalDateTime dateTo) {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.date >= :dateFrom and r.date <= :dateTo", Repair.class)
-                .setParameter("dateFrom", dateFrom)
-                .setParameter("dateTo", dateTo)
-                .getResultList();
+                            .setParameter("dateFrom", dateFrom)
+                            .setParameter("dateTo", dateTo)
+                            .getResultList();
     }
 
     @Override
     public List<Repair> getRepairByOwnerId(long id) {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.owner.id = :id", Repair.class)
-                .setParameter("id", id)
-                .getResultList();
+                            .setParameter("id", id)
+                            .getResultList();
+    }
+
+    @Override
+    public List<Repair> getRepairByPropertyId(long id) {
+        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.property.id = :id", Repair.class)
+                            .setParameter("id", id)
+                            .getResultList();
     }
 
     @Override
     public List<Repair> getRepairByOwnerAndProperty(long ownerId, long propertyId) {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.owner.id = :ownerId and r.property.id = :propertyId", Repair.class)
-                .setParameter("ownerId", ownerId)
-                .setParameter("propertyId", propertyId)
-                .getResultList();
+                            .setParameter("ownerId", ownerId)
+                            .setParameter("propertyId", propertyId)
+                            .getResultList();
     }
 }
