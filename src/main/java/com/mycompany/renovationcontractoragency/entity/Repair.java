@@ -6,8 +6,6 @@ package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.RepairStatus;
 import com.mycompany.renovationcontractoragency.enums.RepairType;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;

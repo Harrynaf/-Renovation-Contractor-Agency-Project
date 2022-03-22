@@ -5,9 +5,6 @@
 package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.PropertyType;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -165,6 +162,12 @@ public class Property implements Serializable {
 
     @Override
     public String toString() {
-        return "Property{" + "id=" + id + ", eCode=" + eCode + ", address=" + address + ", constructionYear=" + constructionYear + ", type=" + type + ", repairs=" + repairs + '}';
+        return "Property{" + "id=" + id + 
+                ", eCode=" + eCode + 
+                ", address=" + address + 
+                ", constructionYear=" + constructionYear + 
+                ", type=" + type + 
+                ", ownerId=" + owner.getId() + 
+                ", repairId=" + repairs + '}';
     }
 }

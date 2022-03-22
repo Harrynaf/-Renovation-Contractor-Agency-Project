@@ -35,25 +35,26 @@ public class Main {
 
         RepairRepo repairRepo = new RepairRepoImpl();
         RepairService repairService = new RepairServiceImpl(repairRepo);
-
-        // DATA CREATION TEST
-        //  createData(userService, propertyService, repairService);
-
-        // Property TEST
-        updateProperty(propertyService);
+        
+        createData(userService, propertyService, repairService);
+        
         getAllProperty(propertyService);
+        updateProperty(propertyService);
+        getPropertyById(propertyService);
+        getPropertiesByVat(propertyService);
         deleteProperty(propertyService);
+        getAllProperty(propertyService);
 
-        // REPAIR TEST
-        getAllRepair(repairService);
-        getRepairByDate(repairService);
-        getRepairByDateRange(repairService);
-        getRepairByOwnerId(repairService);
-        getRepairByPropertyId(repairService);
-        updateRepair(repairService);
-        deleteRepair(repairService);
+//        getAllRepair(repairService);
+//        getRepairByDate(repairService);
+//        getRepairByDateRange(repairService);
+//        getRepairByOwnerId(repairService);
+//        getRepairByPropertyId(repairService);
+//        updateRepair(repairService);
+//        deleteRepair(repairService);
 
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void createData(UserService userService, PropertyService propertyService, RepairService repairService) {
 
         User owner1 = new User("123456789", "John", "Psathas", "Athens", "6991234567", "john@mail.com", "john", "11111", User_Type.OWNER);
@@ -73,13 +74,15 @@ public class Main {
         }
 
         Property property1 = new Property("E9_1", "Athens", LocalDate.of(2021, 1, 1), PropertyType.APARTMENT_BUILDING, userService.get(1L));
-        Property property2 = new Property("E9_2", "Athens", LocalDate.of(2021, 1, 1), PropertyType.MAISONETTE, userService.get(2L));
-        Property property3 = new Property("E9_3", "Athens", LocalDate.of(2021, 1, 1), PropertyType.DETACHED_HOUSE, userService.get(3L));
+        Property property2 = new Property("E9_2", "Athens", LocalDate.of(1987, 1, 1), PropertyType.MAISONETTE, userService.get(2L));
+        Property property3 = new Property("E9_3", "Athens", LocalDate.of(2005, 1, 1), PropertyType.DETACHED_HOUSE, userService.get(2L));
+        Property property4 = new Property("E9_4", "Athens", LocalDate.of(2001, 1, 1), PropertyType.APARTMENT_BUILDING, userService.get(3L));
 
         try {
             propertyService.create(property1);
             propertyService.create(property2);
             propertyService.create(property3);
+            propertyService.create(property4);
             logger.info("All good with creating property data");
         } catch (EntityExistsException e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
@@ -98,36 +101,75 @@ public class Main {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
-    public static void updateProperty(PropertyService propertyService) {
-        try {
-            Property property4 = propertyService.get(4L);
-            property4.setAddress("Thessaloniki");
-            propertyService.update(property4);
-        } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}", e.getMessage());
-        }
-    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
 
     public static void getAllProperty(PropertyService propertyService) {
         try {
-            List<Property> properties = propertyService.getByVat("123412789");
+            List<Property> properties = propertyService.getAll();
             for (Property property : properties) {
                 System.out.println(property);
             }
+            logger.info("All good with getting all property data");
         } catch (Exception e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
-
+    
+    public static void updateProperty(PropertyService propertyService) {
+        try {
+            Property property = propertyService.get(1L);
+            property.setAddress("Thessaloniki");
+            propertyService.update(property);
+            logger.info("All good with updating property data");
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+    
+    public static void getPropertyById(PropertyService propertyService) {
+        try {
+            Property property = propertyService.get(1L);
+            System.out.println(property);
+            logger.info("All good with getting property data by ID");
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+    
+    public static void getPropertiesByVat(PropertyService propertyService) {
+        try {
+            List<Property> propertiesByVat = propertyService.getByVat("123412789");
+            for (Property property : propertiesByVat) {
+                System.out.println(property);
+            }
+            logger.info("All good with getting property data by vat");
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+    
     public static void deleteProperty(PropertyService propertyService) {
         try {
-            Property property5 = propertyService.get(5L);
-            propertyService.delete(property5);
+            Property property = propertyService.get(2L);
+            propertyService.delete(property);
+            logger.info("All good with deleting property data");
         } catch (Exception e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
-
+    
+    public static void foundByEcode(PropertyService propertyService) {
+        try {
+            Property property = propertyService.get(2L);
+            boolean foundProperty = propertyService.foundByECode(property);
+            System.out.println(foundProperty);
+            logger.info("All good checking property by ecode");
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void getAllRepair(RepairService repairService) {
         try {
             List<Repair> repairs = repairService.getAll();
@@ -163,7 +205,7 @@ public class Main {
 
     public static void getRepairByOwnerId(RepairService repairService) {
         try {
-            List<Repair> repairs = repairService.getRepairByOwnerId(repairService.get(7L).getOwner().getId());
+            List<Repair> repairs = repairService.getRepairByOwnerId(repairService.get(1L).getOwner().getId());
             for (Repair repair : repairs) {
                 System.out.println(repair);
             }
@@ -174,7 +216,7 @@ public class Main {
 
     public static void getRepairByPropertyId(RepairService repairService) {
         try {
-            List<Repair> repairs = repairService.getRepairByPropertyId(repairService.get(8L).getProperty().getId());
+            List<Repair> repairs = repairService.getRepairByPropertyId(repairService.get(2L).getProperty().getId());
             for (Repair repair : repairs) {
                 System.out.println(repair);
             }
@@ -185,7 +227,7 @@ public class Main {
 
     public static void updateRepair(RepairService repairService) {
         try {
-            Repair repair2 = repairService.get(7L);
+            Repair repair2 = repairService.get(2L);
             repair2.setStatus(RepairStatus.STANDBY_MODE);
             repairService.update(repair2);
             logger.info("All good with updating repair data");
@@ -196,7 +238,7 @@ public class Main {
 
     public static void deleteRepair(RepairService repairService) {
         try {
-            Repair repair1 = repairService.get(8L);
+            Repair repair1 = repairService.get(1L);
             repairService.delete(repair1);
             logger.info("All good with deleting repair data");
         } catch (Exception e) {

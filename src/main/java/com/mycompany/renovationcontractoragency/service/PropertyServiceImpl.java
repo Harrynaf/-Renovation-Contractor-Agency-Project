@@ -41,7 +41,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     /**
-     * Check if id of property exist in repo and if it does throws
+     * Check if property exist in repo and if it does throws
      * EntityNotFoundException else delete property
      *
      * @param property
