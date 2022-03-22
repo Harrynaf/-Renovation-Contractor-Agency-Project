@@ -32,6 +32,7 @@ public class User implements Serializable {
     private String phone_number;
     @Column(unique=true)
     private String email;
+    @Enumerated(value = EnumType.STRING)
     private User_Type user_Type;
 
 
