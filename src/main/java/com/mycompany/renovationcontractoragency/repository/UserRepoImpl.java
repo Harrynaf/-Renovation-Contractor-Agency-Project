@@ -7,7 +7,6 @@ import java.util.List;
 
 public class UserRepoImpl implements UserRepo {
 
-
     @Override
     public List<User> getAll() {
         return entityManager.createQuery("SELECT a FROM User a", User.class).getResultList();
