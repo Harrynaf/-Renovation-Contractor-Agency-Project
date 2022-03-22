@@ -52,12 +52,4 @@ public class RepairRepoImpl implements RepairRepo {
                             .setParameter("id", id)
                             .getResultList();
     }
-
-    @Override
-    public List<Repair> getRepairByOwnerAndProperty(long ownerId, long propertyId) {
-        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.owner.id = :ownerId and r.property.id = :propertyId", Repair.class)
-                            .setParameter("ownerId", ownerId)
-                            .setParameter("propertyId", propertyId)
-                            .getResultList();
-    }
 }

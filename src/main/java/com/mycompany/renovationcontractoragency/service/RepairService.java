@@ -18,5 +18,4 @@ public interface RepairService extends Service<Repair> {
     List<Repair> getRepairByDateRange(LocalDateTime dateFrom, LocalDateTime dateTo);
     List<Repair> getRepairByOwnerId(long id);
     List<Repair> getRepairByPropertyId(long id);
-    List<Repair> getRepairByOwnerAndProperty(long ownerId, long propertyId);
 }
