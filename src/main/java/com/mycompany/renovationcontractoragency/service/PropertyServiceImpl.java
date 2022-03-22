@@ -79,6 +79,6 @@ public class PropertyServiceImpl implements PropertyService {
      */
     @Override
     public boolean foundByECode(Property property) {
-        return propertyRepo.getByECode(property) != null;
+        return propertyRepo.getByECode(property);
     }
 }
