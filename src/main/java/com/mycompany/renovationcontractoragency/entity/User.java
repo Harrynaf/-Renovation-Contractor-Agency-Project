@@ -22,8 +22,8 @@ public class User implements Serializable {
     private Long id;
     @Column(unique = true)
     private String username;
-    @Column(unique=true)
     private String password;
+    @Column(unique=true)
     private String vat;
     private String name;
     private String surname;
@@ -129,7 +129,7 @@ public class User implements Serializable {
         this.properties = properties;
     }
 
-    public User(String username, String password, String vat, String name, String surname, String address, String phone_number, String email, User_Type user_Type) {
+    public User(String vat, String name, String surname, String address, String phone_number, String email,String username, String password, User_Type user_Type) {
         this.username = username;
         this.password = password;
         this.vat = vat;
