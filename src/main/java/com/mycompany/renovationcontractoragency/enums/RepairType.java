@@ -9,18 +9,9 @@ package com.mycompany.renovationcontractoragency.enums;
  * @author Agkoutsou
  */
 public enum RepairType {
-    PAINTING("Painting"), INSULATION("Insulation"), FRAMES("Frames"), PLUMPING("Plumbing"), ELECTRICAL_WORK("Electrical work");
-
-    private final String repairType;
-
-    RepairType(String repairType) {
-        this.repairType = repairType;
-    }
-
-    public String getRepairType() {
-        return repairType;
-    }
-
-    @Override
-    public String toString() {return "RepairType{" + "repairType=" + repairType + '}';}
+    PAINTING,
+    INSULATION,
+    FRAMES,
+    PLUMPING,
+    ELECTRICAL_WORK
 }
