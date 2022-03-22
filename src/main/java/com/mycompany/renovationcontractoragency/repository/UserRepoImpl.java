@@ -38,7 +38,7 @@ public class UserRepoImpl implements UserRepo {
      */
     @Override
     public User getByVat(String vat) {
-        return entityManager.createQuery("SELECT s FROM Owner s WHERE s.vat = :vat", User.class).setParameter("vat", vat).getSingleResult();
+        return entityManager.createQuery("SELECT s FROM User s WHERE s.vat = :vat", User.class).setParameter("vat", vat).getSingleResult();
     }
 
     /**
