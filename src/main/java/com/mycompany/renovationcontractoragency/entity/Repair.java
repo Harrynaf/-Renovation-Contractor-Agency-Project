@@ -6,6 +6,8 @@ package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.RepairStatus;
 import com.mycompany.renovationcontractoragency.enums.RepairType;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -16,17 +18,15 @@ import java.time.LocalDateTime;
  * @author Agkoutsou
  */
 @Entity
-@Table(name = "repair", uniqueConstraints = {@UniqueConstraint(columnNames = {"ownerId", "propertyId"})})
+@Table(name = "repair")
 public class Repair implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long repairId;
     @ManyToOne
-    @JoinColumn(name = "ownerId", referencedColumnName = "id")
     private User owner;
     @ManyToOne
-    @JoinColumn(name = "propertyId", referencedColumnName = "id", unique = true)
     private Property property;
     @Column(name = "date")
     private LocalDateTime date;
@@ -46,7 +46,7 @@ public class Repair implements Serializable {
     public Repair() {}
 
     public Repair(Property property, LocalDateTime date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
-        this.owner = property.getOwner();
+        this.owner= property.getOwner();
         this.property = property;
         this.date = date;
         this.description = description;
@@ -132,7 +132,7 @@ public class Repair implements Serializable {
     public String toString() {
         return "Repair{" +
                 "repairId=" + repairId +
-                ", owner=" + owner +
+               // ", owner=" + owner +
                 ", property=" + property +
                 ", date=" + date +
                 ", description='" + description + '\'' +

@@ -26,132 +26,9 @@ public class Main {
     public static void main(String[] args) {
 
         createData();
+       // updateUsers();
+        //deleteUsers();
 
-//        System.out.println("--------------------USER--------------------");
-//
-//        UserRepo userRepo = new UserRepoImpl();
-//        UserService userService = new UserServiceImpl(userRepo);
-//
-//        
-//        try {
-//            System.out.println(userService.getByEmail("harry@mail.com"));
-//            System.out.println(userService.getByVat("123456789"));
-//        } catch (Exception e) {
-//            logger.error("Something went wrong. Details: {}", e.getMessage());
-//        }
-//        owner2.setUsername("adsdasdasdasdas");
-//        try {
-//            userService.update(owner2);
-//            userService.update(owner1);
-//        } catch (EntityNotFoundException e) {
-//            logger.error("Something went wrong. Details: {}", e.getMessage());
-//        }
-//        userService.getAll();
-//        try {
-//            userService.delete(owner1);
-//            logger.info("All good with deleting users");
-//        } catch (EntityNotFoundException e) {
-//            logger.error("Something went wrong. Details: {}", e.getMessage());
-//        }
-//
-//        System.out.println("--------------------PROPERTY--------------------");
-//        PropertyRepo propertyRepo = new PropertyRepoImpl();
-//        PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
-//
-//
-//        System.out.println("---Test GetAll property---");
-//        try {
-//            System.out.println(propertyService.getAll());
-//        } catch (Exception e) {
-//            logger.error("Something went wrong. Details: {}", e.getMessage());
-//        }
-//
-//        System.out.println("---Test Update and Get property---");
-//        try {
-//            Property property4 = propertyService.get(4L);
-//            property4.setAddress("Thessaloniki");
-//            propertyService.update(property4);
-//        } catch (Exception e) {
-//            logger.error("Something went wrong. Details: {}", e.getMessage());
-//        }
-//
-//        System.out.println("---Test Delete and Get property---");
-//        try {
-//            Property property5 = propertyService.get(5L);
-//            propertyService.delete(property5);
-//        } catch (Exception e) {
-//            logger.error("Something went wrong. Details: {}", e.getMessage());
-//        }
-//
-//        System.out.println("---Test GetByVat property---");
-//        try {
-//            List<Property> properties = propertyService.getByVat("123412789");
-//            for (Property property : properties) {
-//                System.out.println(property);
-//            }
-//        } catch (Exception e) {
-//            logger.error("Something went wrong. Details: {}", e.getMessage());
-//        }
-//
-//        System.out.println("--------------------REPAIR--------------------");
-//        RepairRepo repairRepo = new RepairRepoImpl();
-//        RepairService repairService = new RepairServiceImpl(repairRepo);
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//
-//        System.out.println("---Test Create repair---");
-//        
-//        //  Repair repair2 = new Repair(propertyService.get(6).getOwner(), propertyService.get(6), LocalDateTime.parse("2022-02-15 22:30", formatter), "repairDescription2", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("100.0"), "workToDoDescription2");
-//
-//
-//        System.out.println("---Test GetAll repairs---");
-//        try {
-//            System.out.println(repairService.getAll());
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        System.out.println("---Test Get repair---");
-//        try {
-//            System.out.println(repairService.get(repair1.getRepairId()));
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        System.out.println("---Test GetRepairByDate, GetRepairByDateRange, GetRepairByOwnerId---");
-//        try {
-//            System.out.println(repairService.getRepairByDate(LocalDateTime.parse("2022-02-15 22:30", formatter)));
-//            System.out.println(repairService.getRepairByDateRange(LocalDateTime.parse("2022-01-01 00:00", formatter), LocalDateTime.parse("2022-02-10 00:00", formatter)));
-//            System.out.println(repairService.getRepairByOwnerId(userService.getByEmail("aggelos@mail.com").getId()));
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        System.out.println("---Test GetRepairByOwnerAndProperty---");
-//        try {
-//            System.out.println(repairService.getRepairByOwnerAndProperty(userService.get(3).getId(), propertyService.get(5).getId()));
-//            System.out.println(repairService.getRepairByOwnerAndProperty(userService.get(3).getId(), propertyService.get(4).getId())); // Expecting an empty list
-//            System.out.println(repairService.getRepairByOwnerAndProperty(propertyService.get(5).getOwner().getId(), propertyService.get(5).getId()));
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        System.out.println("---Test Update repair---");
-//        try {
-//            repair1.setCost(new BigDecimal("150.0"));
-//            repairService.update(repair1);
-//
-//            // repair2.setDescription("dummy description");
-//            //  repairService.update(repair2);
-//        } catch (EntityNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        System.out.println("---Test Delete repair---");
-//        try {
-//            repairService.delete(repair1);
-//        } catch (EntityNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        }
     }
 
     public static void createData() {
@@ -160,6 +37,9 @@ public class Main {
 
         RepairRepo repairRepo = new RepairRepoImpl();
         RepairService repairService = new RepairServiceImpl(repairRepo);
+
+        PropertyRepo propertyRepo = new PropertyRepoImpl();
+        PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
 
         User owner1 = new User("123456789", "John", "Psathas", "Athens", "6991234567", "john@mail.com", "john", "11111", User_Type.OWNER);
         User owner2 = new User("123412789", "Harry", "Naf", "Athens", "6991234234", "harry@mail.com", "harry", "11111", User_Type.OWNER);
@@ -177,8 +57,6 @@ public class Main {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
-        PropertyRepo propertyRepo = new PropertyRepoImpl();
-        PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
 
         Property property1 = new Property("E9_1", "Athens", LocalDate.of(2021, 1, 1), PropertyType.APARTMENT_BUILDING, userService.get(1L));
         Property property2 = new Property("E9_2", "Athens", LocalDate.of(2021, 1, 1), PropertyType.MAISONETTE, userService.get(2L));
@@ -194,9 +72,9 @@ public class Main {
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Repair repair1 = new Repair(propertyService.get(4L), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
-        Repair repair2 = new Repair(propertyService.get(5L), LocalDateTime.parse("2022-02-15 10:30", formatter), "repairDescription2", RepairType.FRAMES, RepairStatus.COMPLETE, new BigDecimal("100.0"), "workToDoDescription2");
-        Repair repair3 = new Repair(propertyService.get(6L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
+        Repair repair1 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
+        Repair repair2 = new Repair(propertyService.get(2L), LocalDateTime.parse("2022-02-15 10:30", formatter), "repairDescription2", RepairType.FRAMES, RepairStatus.COMPLETE, new BigDecimal("100.0"), "workToDoDescription2");
+        Repair repair3 = new Repair(propertyService.get(3L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
 
         try {
             repairService.create(repair1);
@@ -206,5 +84,41 @@ public class Main {
         } catch (EntityExistsException e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
+        System.out.println(propertyService.get(1L).getRepairs().toString());
+    }
+
+    public static void updateUsers() {
+        UserRepo userRepo = new UserRepoImpl();
+        UserService userService = new UserServiceImpl(userRepo);
+
+        userService.get(1).setUsername("Changed Username");
+        userService.update(userService.get(1));
+        userService.get(2).setAddress("Changed Address");
+        userService.update(userService.get(2));
+        userService.get(2).setUser_Type(User_Type.ADMIN);
+        userService.update(userService.get(2));
+
+    }
+
+    public static void deleteUsers() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
+        EntityManager entityManager = emf.createEntityManager();
+
+        UserRepo userRepo = new UserRepoImpl();
+        UserService userService = new UserServiceImpl(userRepo);
+
+        RepairRepo repairRepo = new RepairRepoImpl();
+        RepairService repairService = new RepairServiceImpl(repairRepo);
+
+        PropertyRepo propertyRepo = new PropertyRepoImpl();
+        PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
+
+        //propertyService.get(1L).setRepairs(entityManager.find(Repair.class, );
+
+       // propertyService.delete(propertyService.get(1L));
+        //userService.delete(userService.get(1L));
+        //userService.delete(userService.get(2));
+       // userService.delete(userService.get(3));
+
     }
 }

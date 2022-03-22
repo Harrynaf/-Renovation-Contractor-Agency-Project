@@ -5,11 +5,16 @@
 package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.PropertyType;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.*;
+
+
 
 /**
  *
@@ -20,7 +25,7 @@ import javax.persistence.*;
 public class Property implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "ePropertyCode", nullable = false, unique = true)
     private String eCode;
@@ -31,9 +36,9 @@ public class Property implements Serializable {
     @Column(name = "propertyType")
     @Enumerated(value = EnumType.STRING)
     private PropertyType type;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User owner;
-    @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<Repair> repairs;
 
     public Property() {

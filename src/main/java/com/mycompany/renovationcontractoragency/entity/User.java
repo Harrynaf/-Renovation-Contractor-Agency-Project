@@ -5,6 +5,7 @@
 package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.User_Type;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.usertype.UserType;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import java.util.List;
 @Table(name = "user")
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
     private String username;
@@ -36,7 +37,7 @@ public class User implements Serializable {
     private User_Type user_Type;
 
 
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<Property> properties;
 
     public User() {
