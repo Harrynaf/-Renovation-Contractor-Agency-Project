@@ -45,8 +45,8 @@ public class Repair implements Serializable {
 
     public Repair() {}
 
-    public Repair(Owner owner, Property property, LocalDateTime date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
-        this.owner = owner;
+    public Repair(Property property, LocalDateTime date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
+        this.owner = property.getOwner();
         this.property = property;
         this.date = date;
         this.description = description;
