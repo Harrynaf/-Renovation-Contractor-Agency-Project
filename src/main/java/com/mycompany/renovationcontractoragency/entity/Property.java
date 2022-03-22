@@ -41,6 +41,12 @@ public class Property implements Serializable {
 
     /**
      * Constructor without id
+     *
+     * @param eCode
+     * @param address
+     * @param constructionYear
+     * @param type
+     * @param owner
      */
     public Property(String eCode, String address, LocalDate constructionYear, PropertyType type, User owner) {
         this.eCode = eCode;

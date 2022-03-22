@@ -5,8 +5,6 @@
 package com.mycompany.renovationcontractoragency.entity;
 
 import com.mycompany.renovationcontractoragency.enums.User_Type;
-import org.hibernate.usertype.UserType;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;

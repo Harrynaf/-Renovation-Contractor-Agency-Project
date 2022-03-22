@@ -8,26 +8,50 @@ import com.mycompany.renovationcontractoragency.entity.Property;
 import java.util.List;
 
 /**
+ * An ipmplementation of PropertyRepo
+ *
  * @author Ioannis Psathas
  */
 public class PropertyRepoImpl implements PropertyRepo {
 
+    /**
+     * Returns a property with given id
+     *
+     * @param property id as long
+     * @return property
+     */
     @Override
     public Property get(long id) {
         return entityManager.find(Property.class, id);
     }
 
+    /**
+     * Returns a list of properties with given vat
+     *
+     * @param owner vat number as String
+     * @return List of properties
+     */
     @Override
     public List<Property> getByVat(String vat) {
         return entityManager.createQuery("SELECT p FROM Property p WHERE p.owner.vat = :vat", Property.class).setParameter("vat", vat).getResultList();
     }
 
+    /**
+     * Returns a list of properties with given eCode
+     *
+     * @param eCode
+     * @return List of properties
+     */
     @Override
-    public boolean getByECode(Property property) {
-        List<Property> resultList =  entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", property.geteCode()).getResultList();
-        return !resultList.isEmpty();
+    public List<Property> getByECode(String eCode) {
+        return entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", eCode).getResultList();
     }
 
+    /**
+     * Retuns a list with all properties
+     *
+     * @return List of propeties
+     */
     @Override
     public List<Property> getAll() {
         return entityManager.createQuery("SELECT p FROM Property p", Property.class).getResultList();
