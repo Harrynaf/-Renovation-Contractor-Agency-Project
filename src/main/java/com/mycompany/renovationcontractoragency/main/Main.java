@@ -129,12 +129,12 @@ public class Main {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         System.out.println("---Test Create repair---");
-        Repair repair1 = new Repair(propertyService.get(1).getOwner(), propertyService.get(1), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
-        Repair repair2 = new Repair(propertyService.get(2).getOwner(), propertyService.get(2), LocalDateTime.parse("2022-02-15 22:30", formatter), "repairDescription2", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("100.0"), "workToDoDescription2");
+        Repair repair1 = new Repair(propertyService.get(6).getOwner(), propertyService.get(6), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
+      //  Repair repair2 = new Repair(propertyService.get(6).getOwner(), propertyService.get(6), LocalDateTime.parse("2022-02-15 22:30", formatter), "repairDescription2", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("100.0"), "workToDoDescription2");
 
         try {
             repairService.create(repair1);
-            repairService.create(repair2);
+        //    repairService.create(repair2);
         } catch (EntityExistsException e) {
             System.out.println(e.getMessage());
         }
@@ -176,8 +176,8 @@ public class Main {
             repair1.setCost(new BigDecimal("150.0"));
             repairService.update(repair1);
 
-            repair2.setDescription("dummy description");
-            repairService.update(repair2);
+           // repair2.setDescription("dummy description");
+          //  repairService.update(repair2);
         } catch (EntityNotFoundException e) {
             System.out.println(e.getMessage());
         }
