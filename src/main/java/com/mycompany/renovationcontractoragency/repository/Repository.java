@@ -30,7 +30,5 @@ public interface Repository<T> {
     }
 
     List<T> getAll();
-
     T get(long id);
-
 }
