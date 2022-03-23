@@ -128,7 +128,24 @@ public class Main {
             user.setUsername("changed username");
             userService.update(user);
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}", e.getMessage());
+          //  logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+    public static void updateUserNonExistent(UserService userService) {
+        try {
+            User user = new User();
+            user.setUsername("changed username");
+            userService.update(user);
+        } catch (Exception e) {
+            //  logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+    public static void createExistentUser(UserService userService) {
+        try {
+            User user = userService.get(2L);
+            userService.create(user);
+        } catch (Exception e) {
+            //  logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
 
@@ -137,7 +154,7 @@ public class Main {
             User user = userService.get(1L);
             userService.delete(user);
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}", e.getMessage());
+           // logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
 
@@ -176,7 +193,7 @@ public class Main {
             propertyService.update(property);
             logger.info("All good with updating property data");
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}", e.getMessage());
+          //  logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
     
@@ -208,7 +225,7 @@ public class Main {
             propertyService.delete(property);
             logger.info("All good with deleting property data");
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}", e.getMessage());
+          //  logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
     
@@ -297,7 +314,7 @@ public class Main {
             repairService.update(repair2);
             logger.info("All good with updating repair data");
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}", e.getMessage());
+         //   logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
 
@@ -307,7 +324,7 @@ public class Main {
             repairService.delete(repair1);
             logger.info("All good with deleting repair data");
         } catch (Exception e) {
-            logger.error("Something went wrong. Details: {}", e.getMessage());
+        //    logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
 }
