@@ -14,21 +14,11 @@ import java.util.List;
  */
 public interface Repository<T> {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
-    EntityManager entityManager = emf.createEntityManager();
+    void save(T t);
 
-    default void save(T t) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(t);
-        entityManager.getTransaction().commit();
-    }
-
-    default void delete(T t) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(t);
-        entityManager.getTransaction().commit();
-    }
+    void delete(T t);
 
     List<T> getAll();
+
     T get(long id);
 }
