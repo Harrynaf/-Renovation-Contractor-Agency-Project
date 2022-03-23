@@ -41,8 +41,22 @@ public class Repair implements Serializable {
     @Column(name = "workToDoDescription")
     private String toDoDesc;
 
+    /**
+     * NoArgs Constructor
+     */
     public Repair() {}
 
+    /**
+     * Constructor without id
+     *
+     * @param property
+     * @param date
+     * @param description
+     * @param type
+     * @param status
+     * @param cost
+     * @param toDoDesc
+     */
     public Repair(Property property, LocalDateTime date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
         this.owner= property.getOwner();
         this.property = property;
