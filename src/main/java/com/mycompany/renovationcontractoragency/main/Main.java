@@ -38,7 +38,7 @@ public class Main {
         RepairService repairService = new RepairServiceImpl(repairRepo);
 
 //        //---DATA CREATION TEST---
-        createData(userService, propertyService, repairService);
+//        createData(userService, propertyService, repairService);
 
 //        //---REPAIR TEST---
 //        getAllRepair(repairService);
@@ -48,6 +48,7 @@ public class Main {
 //        getRepairByPropertyId(repairService);
 //        updateRepair(repairService);
 //        deleteRepair(repairService);
+//        deleteWrongRepair(repairService);
 
 //        //---PROPERTY TEST---
 //        getAllProperty(propertyService);
@@ -325,6 +326,16 @@ public class Main {
             logger.info("All good with deleting repair data");
         } catch (Exception e) {
         //    logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+
+    public static void deleteWrongRepair(RepairService repairService) {
+        try {
+            Repair repair1 = repairService.get(115L);
+            repairService.delete(repair1);
+            logger.info("All good with deleting repair data");
+        } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
 }
