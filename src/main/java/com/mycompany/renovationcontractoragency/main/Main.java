@@ -38,7 +38,7 @@ public class Main {
         RepairService repairService = new RepairServiceImpl(repairRepo);
 
 //        //---DATA CREATION TEST---
-//        createData(userService, propertyService, repairService);
+        createData(userService, propertyService, repairService);
 
 //        //---REPAIR TEST---
 //        getAllRepair(repairService);
@@ -64,6 +64,9 @@ public class Main {
 //        getUserbyVat(userService);
 //        getUserbyEmail(userService);
 //        deleteUser(userService);
+//        updateUserNonExistent(userService);
+//        createExistentUser(userService);
+          
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void createData(UserService userService, PropertyService propertyService, RepairService repairService) {
