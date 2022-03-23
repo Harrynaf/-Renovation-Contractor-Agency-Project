@@ -56,6 +56,7 @@ public class Main {
 //        getPropertiesByVat(propertyService);
 //        deleteProperty(propertyService);
 //        getAllProperty(propertyService);
+//        createPropertyWithExistingECode(userService, propertyService);
 
 //        //---USER TEST---
 //        updateUser(userService);
@@ -218,6 +219,18 @@ public class Main {
             System.out.println(foundProperty);
             logger.info("All good checking property by ecode");
         } catch (Exception e) {
+            logger.error("Something went wrong. Details: {}", e.getMessage());
+        }
+    }
+    
+    public static void createPropertyWithExistingECode(UserService userService, PropertyService propertyService) {
+
+        Property property1 = new Property("E9_4", "Athens", LocalDate.of(2001, 1, 1), PropertyType.APARTMENT_BUILDING, userService.get(3L));
+
+        try {
+            propertyService.create(property1);
+            logger.info("All good with creating property data");
+        } catch (EntityExistsException e) {
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
