@@ -13,21 +13,22 @@ import java.util.List;
  *
  * @author Ioannis Psathas
  */
-public class PropertyRepoImpl implements PropertyRepo {
+public class PropertyRepoImpl extends ManageEntity implements PropertyRepo {
     private final EntityManager entityManager;
     
     public PropertyRepoImpl(EntityManager entityManager) {
+        super(entityManager);
         this.entityManager = entityManager;
     }
     
-    @Override
+
     public void save(Property property) {
-        ManageEntity.save(entityManager,property);
+        super.saveEntity(property);
     }
-    
-    @Override
+
+
     public void delete(Property property) {
-        ManageEntity.delete(entityManager,property);
+        super.deleteEntity(property);
     }
     
     /**

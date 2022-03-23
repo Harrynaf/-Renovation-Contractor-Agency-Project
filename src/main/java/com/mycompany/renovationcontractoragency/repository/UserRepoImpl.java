@@ -6,21 +6,22 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 
-public class UserRepoImpl implements UserRepo {
+public class UserRepoImpl extends ManageEntity implements UserRepo {
     private final EntityManager entityManager;
 
     public UserRepoImpl(EntityManager entityManager) {
+        super(entityManager);
         this.entityManager = entityManager;
     }
-    
+
     @Override
     public void save(User user) {
-        ManageEntity.save(entityManager,user);
+        super.saveEntity(user);
     }
-    
+
     @Override
     public void delete(User user) {
-        ManageEntity.delete(entityManager,user);
+        super.deleteEntity(user);
     }
     
     @Override

@@ -53,7 +53,7 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public void delete(Property property) {
         if (get(property.getId()) != null) {
-            propertyRepo.delete(property);
+            propertyRepo. delete(property);
         } else {
             logger.error("Something went wrong. EntityNotFoundException");
             throw new EntityNotFoundException();
@@ -81,7 +81,7 @@ public class PropertyServiceImpl implements PropertyService {
     /**
      * Returns a property with given id
      *
-     * @param property id as long
+     * @param id as long
      * @return property
      */
     @Override
@@ -102,7 +102,7 @@ public class PropertyServiceImpl implements PropertyService {
     /**
      * Returns a list of properties with given vat
      *
-     * @param owners vat number as String
+     * @param vat number as String
      * @return List of properties
      */
     @Override

@@ -2,14 +2,21 @@ package com.mycompany.renovationcontractoragency.repository;
 
 import javax.persistence.EntityManager;
 
-public abstract class ManageEntity {
 
-    public static void save(EntityManager entityManager, Object t) {
+public abstract class ManageEntity {
+    private final EntityManager entityManager;
+
+    public ManageEntity(EntityManager entityManager) {
+        this.entityManager=entityManager;
+    }
+
+    public void saveEntity(Object t) {
         entityManager.getTransaction().begin();
         entityManager.persist(t);
         entityManager.getTransaction().commit();
     }
-    public static void delete(EntityManager entityManager, Object t) {
+
+    public void deleteEntity(Object t) {
         entityManager.getTransaction().begin();
         entityManager.remove(t);
         entityManager.getTransaction().commit();

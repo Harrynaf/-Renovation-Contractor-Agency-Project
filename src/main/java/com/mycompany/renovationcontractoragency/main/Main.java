@@ -38,7 +38,7 @@ public class Main {
         RepairService repairService = new RepairServiceImpl(repairRepo);
 
 //        //---DATA CREATION TEST---
-        createData(userService, propertyService, repairService);
+     //   createData(userService, propertyService, repairService);
 
 //        //---REPAIR TEST---
 //        getAllRepair(repairService);
@@ -48,7 +48,7 @@ public class Main {
 //        getRepairByPropertyId(repairService);
 //        updateRepair(repairService);
 //        deleteRepair(repairService);
-//        deleteWrongRepair(repairService);
+        deleteWrongRepair(repairService);
 
 //        //---PROPERTY TEST---
 //        getAllProperty(propertyService);
@@ -64,7 +64,7 @@ public class Main {
 //        getUserbyVat(userService);
 //        getUserbyEmail(userService);
 //        deleteUser(userService);
-//        updateUserNonExistent(userService);
+        updateUserNonExistent(userService);
 //        createExistentUser(userService);
           
     }
@@ -137,8 +137,8 @@ public class Main {
     }
     public static void updateUserNonExistent(UserService userService) {
         try {
-            User user = new User();
-            user.setUsername("changed username");
+            User user = new User("323", "John", "Psathas", "Athens", "434", "4@34.com", "john", "11111", User_Type.OWNER);
+            user.setId(15L);
             userService.update(user);
         } catch (Exception e) {
             //  logger.error("Something went wrong. Details: {}", e.getMessage());
@@ -334,7 +334,8 @@ public class Main {
 
     public static void deleteWrongRepair(RepairService repairService) {
         try {
-            Repair repair1 = repairService.get(115L);
+            Repair repair1 = new Repair();
+            repair1.setRepairId(100L);
             repairService.delete(repair1);
             logger.info("All good with deleting repair data");
         } catch (Exception e) {

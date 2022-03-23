@@ -14,21 +14,22 @@ import java.util.List;
  *
  * @author Agkoutsou
  */
-public class RepairRepoImpl implements RepairRepo {
+public class RepairRepoImpl extends ManageEntity implements RepairRepo {
     private final EntityManager entityManager;
 
     public RepairRepoImpl(EntityManager entityManager) {
+        super(entityManager);
         this.entityManager = entityManager;
     }
     
     @Override
     public void save(Repair repair) {
-        ManageEntity.save(entityManager,repair);
+        super.saveEntity(repair);
     }
-    
+
     @Override
     public void delete(Repair repair) {
-        ManageEntity.delete(entityManager,repair);
+        super.deleteEntity(repair);
     }
 
     /**
@@ -44,7 +45,7 @@ public class RepairRepoImpl implements RepairRepo {
     /**
      * Returns a repair with given id
      *
-     * @param repair id as long
+     * @param id as long
      * @return repair
      */
     @Override
@@ -55,7 +56,7 @@ public class RepairRepoImpl implements RepairRepo {
     /**
      * Returns a list of repairs with given date
      *
-     * @param repair date as LocalDateTime
+     * @param  date as LocalDateTime
      * @return List of repairs
      */
     @Override
@@ -68,7 +69,7 @@ public class RepairRepoImpl implements RepairRepo {
     /**
      * Returns a list of repairs within a date range
      *
-     * @param repair dateFrom & dateTo as LocalDateTime
+     * @param dateFrom & dateTo as LocalDateTime
      * @return List of repairs
      */
     @Override
@@ -82,7 +83,7 @@ public class RepairRepoImpl implements RepairRepo {
     /**
      * Returns a list of repairs with given owner id
      *
-     * @param repair owner id as long
+     * @param  id as long
      * @return List of repairs
      */
     @Override
@@ -95,7 +96,7 @@ public class RepairRepoImpl implements RepairRepo {
     /**
      * Returns a list of repairs with given property id
      *
-     * @param repair property id as long
+     * @param id as long
      * @return List of repairs
      */
     @Override
