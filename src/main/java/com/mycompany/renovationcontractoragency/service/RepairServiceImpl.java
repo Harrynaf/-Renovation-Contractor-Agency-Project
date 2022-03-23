@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Implementation of RepairService
  *
  * @author Agkoutsou
  */
@@ -25,12 +26,24 @@ public class RepairServiceImpl implements RepairService {
         this.repairRepo = repairRepo;
     }
 
+    /**
+     * Creates a new repair
+     *
+     * @param repair
+     * @return repair
+     */
     @Override
     public Repair create(Repair repair) {
         repairRepo.save(repair);
         return repair;
     }
 
+    /**
+     * Checks if repair exists and if it does throw
+     * EntityNotFoundException else delete repair
+     *
+     * @param repair
+     */
     @Override
     public void delete(Repair repair) throws EntityNotFoundException {
         if (get(repair.getRepairId()) != null) {
@@ -41,6 +54,13 @@ public class RepairServiceImpl implements RepairService {
         }
     }
 
+    /**
+     * Checks if id of repair exists and if it does not throw
+     * EntityNotFoundException else update repair
+     *
+     * @param repair
+     * @return repair
+     */
     @Override
     public Repair update(Repair repair) throws EntityNotFoundException {
         if (get(repair.getRepairId()) != null) {
@@ -52,31 +72,66 @@ public class RepairServiceImpl implements RepairService {
         }
     }
 
+    /**
+     * Returns a list with all repairs
+     *
+     * @return List of repairs
+     */
     @Override
     public List<Repair> getAll() {
         return repairRepo.getAll();
     }
 
+    /**
+     * Returns a repair with given id
+     *
+     * @param repair id as long
+     * @return repair
+     */
     @Override
     public Repair get(long id) {
         return repairRepo.get(id);
     }
 
+    /**
+     * Returns a list of repairs with given date
+     *
+     * @param repair date as LocalDateTime
+     * @return List of repairs
+     */
     @Override
     public List<Repair> getRepairByDate(LocalDateTime date) {
         return repairRepo.getRepairByDate(date);
     }
 
+    /**
+     * Returns a list of repairs within a date range
+     *
+     * @param repair dateFrom & dateTo as LocalDateTime
+     * @return List of repairs
+     */
     @Override
     public List<Repair> getRepairByDateRange(LocalDateTime dateFrom, LocalDateTime dateTo) {
         return repairRepo.getRepairByDateRange(dateFrom, dateTo);
     }
 
+    /**
+     * Returns a list of repairs with given owner id
+     *
+     * @param repair owner id as long
+     * @return List of repairs
+     */
     @Override
     public List<Repair> getRepairByOwnerId(long id) {
         return repairRepo.getRepairByOwnerId(id);
     }
 
+    /**
+     * Returns a list of repairs with given property id
+     *
+     * @param repair property id as long
+     * @return List of repairs
+     */
     @Override
     public List<Repair> getRepairByPropertyId(long id) {
         return repairRepo.getRepairByPropertyId(id);
