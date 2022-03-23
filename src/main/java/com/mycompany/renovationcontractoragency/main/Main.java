@@ -27,17 +27,20 @@ public class Main {
 
     public static void main(String[] args) {
 
-        UserRepo userRepo = new UserRepoImpl();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("TechnikonPU");
+        EntityManager entityManager = emf.createEntityManager();
+
+        UserRepo userRepo = new UserRepoImpl(entityManager);
         UserService userService = new UserServiceImpl(userRepo);
 
-        PropertyRepo propertyRepo = new PropertyRepoImpl();
+        PropertyRepo propertyRepo = new PropertyRepoImpl(entityManager);
         PropertyService propertyService = new PropertyServiceImpl(propertyRepo);
 
-        RepairRepo repairRepo = new RepairRepoImpl();
+        RepairRepo repairRepo = new RepairRepoImpl(entityManager);
         RepairService repairService = new RepairServiceImpl(repairRepo);
 
 //        //---DATA CREATION TEST---
-//        createData(userService, propertyService, repairService);
+        createData(userService, propertyService, repairService);
 
 //        //---USER TEST---
 //        updateUser(userService);

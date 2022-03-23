@@ -5,6 +5,8 @@
 package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.Property;
+
+import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -13,11 +15,12 @@ import java.util.List;
  * @author Ioannis Psathas
  */
 public class PropertyRepoImpl implements PropertyRepo {
+    private final EntityManager entityManager;
 
     /**
      * Returns a property with given id
      *
-     * @param property id as long
+     * @param  id as long
      * @return property
      */
     @Override
@@ -25,11 +28,22 @@ public class PropertyRepoImpl implements PropertyRepo {
         return entityManager.find(Property.class, id);
     }
 
+    public PropertyRepoImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    @Override
+    public void save(Property t) {
+        ManageEntity.save(entityManager,t);
+    }
+    @Override
+    public void delete(Property t) {
+        ManageEntity.delete(entityManager,t);
+    }
+
     /**
      * Returns a list of properties with given vat
-     *
-     * @param owner vat number as String
-     * @return List of properties
+     * @param vat
+     * @return
      */
     @Override
     public List<Property> getByVat(String vat) {
