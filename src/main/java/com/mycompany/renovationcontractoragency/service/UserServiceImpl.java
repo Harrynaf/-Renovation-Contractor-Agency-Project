@@ -4,9 +4,12 @@ import com.mycompany.renovationcontractoragency.entity.User;
 import com.mycompany.renovationcontractoragency.repository.UserRepo;
 import javax.persistence.*;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserServiceImpl implements UserService {
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepo userRepo;
 
     public UserServiceImpl(UserRepo UserRepo) {
@@ -19,6 +22,7 @@ public class UserServiceImpl implements UserService {
             userRepo.save(user);
             return user;
         } else {
+            logger.error("Something went wrong. EntityExistsException");
             throw new EntityExistsException();
         }
     }
@@ -28,6 +32,7 @@ public class UserServiceImpl implements UserService {
         if (get(user.getId())!=null) {
             userRepo.delete(user);
         } else {
+            logger.error("Something went wrong. EntityNotFoundException");
             throw new EntityNotFoundException();
         }
     }
@@ -38,6 +43,7 @@ public class UserServiceImpl implements UserService {
             userRepo.save(user);
             return user;
         } else {
+            logger.error("Something went wrong. EntityNotFoundException");
             throw new EntityNotFoundException();
         }
     }

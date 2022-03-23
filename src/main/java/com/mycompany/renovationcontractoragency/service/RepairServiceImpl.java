@@ -9,13 +9,16 @@ import com.mycompany.renovationcontractoragency.repository.RepairRepo;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Agkoutsou
  */
 public class RepairServiceImpl implements RepairService {
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(PropertyServiceImpl.class);
     private final RepairRepo repairRepo;
 
     public RepairServiceImpl(RepairRepo repairRepo) {
@@ -33,6 +36,7 @@ public class RepairServiceImpl implements RepairService {
         if (get(repair.getRepairId()) != null) {
             repairRepo.delete(repair);
         } else {
+            logger.error("Something went wrong. EntityNotFoundException");
             throw new EntityNotFoundException();
         }
     }
@@ -43,6 +47,7 @@ public class RepairServiceImpl implements RepairService {
             repairRepo.save(repair);
             return repair;
         } else {
+            logger.error("Something went wrong. EntityNotFoundException");
             throw new EntityNotFoundException();
         }
     }

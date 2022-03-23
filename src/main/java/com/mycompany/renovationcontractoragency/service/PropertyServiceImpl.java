@@ -9,6 +9,8 @@ import com.mycompany.renovationcontractoragency.repository.PropertyRepo;
 import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of PropertyService
@@ -16,7 +18,8 @@ import javax.persistence.EntityNotFoundException;
  * @author Ioannis Psathas
  */
 public class PropertyServiceImpl implements PropertyService {
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(PropertyServiceImpl.class);
     private final PropertyRepo propertyRepo;
 
     public PropertyServiceImpl(PropertyRepo propertyRepo) {
@@ -36,6 +39,7 @@ public class PropertyServiceImpl implements PropertyService {
             propertyRepo.save(property);
             return property;
         } else {
+            logger.error("Something went wrong. EntityExistsException");
             throw new EntityExistsException();
         }
     }
@@ -51,6 +55,7 @@ public class PropertyServiceImpl implements PropertyService {
         if (get(property.getId()) != null) {
             propertyRepo.delete(property);
         } else {
+            logger.error("Something went wrong. EntityNotFoundException");
             throw new EntityNotFoundException();
         }
     }
@@ -68,6 +73,7 @@ public class PropertyServiceImpl implements PropertyService {
             propertyRepo.save(property);
             return property;
         } else {
+            logger.error("Something went wrong. EntityNotFoundException");
             throw new EntityNotFoundException();
         }
     }
