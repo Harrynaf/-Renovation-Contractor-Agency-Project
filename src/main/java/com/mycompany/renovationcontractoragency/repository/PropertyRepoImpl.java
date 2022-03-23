@@ -5,7 +5,6 @@
 package com.mycompany.renovationcontractoragency.repository;
 
 import com.mycompany.renovationcontractoragency.entity.Property;
-
 import javax.persistence.EntityManager;
 import java.util.List;
 
@@ -16,7 +15,21 @@ import java.util.List;
  */
 public class PropertyRepoImpl implements PropertyRepo {
     private final EntityManager entityManager;
-
+    
+    public PropertyRepoImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    
+    @Override
+    public void save(Property property) {
+        ManageEntity.save(entityManager,property);
+    }
+    
+    @Override
+    public void delete(Property property) {
+        ManageEntity.delete(entityManager,property);
+    }
+    
     /**
      * Returns a property with given id
      *
@@ -26,18 +39,6 @@ public class PropertyRepoImpl implements PropertyRepo {
     @Override
     public Property get(long id) {
         return entityManager.find(Property.class, id);
-    }
-
-    public PropertyRepoImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-    @Override
-    public void save(Property t) {
-        ManageEntity.save(entityManager,t);
-    }
-    @Override
-    public void delete(Property t) {
-        ManageEntity.delete(entityManager,t);
     }
 
     /**

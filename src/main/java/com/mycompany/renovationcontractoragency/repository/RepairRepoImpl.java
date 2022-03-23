@@ -20,13 +20,15 @@ public class RepairRepoImpl implements RepairRepo {
     public RepairRepoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+    
     @Override
-    public void save(Repair t) {
-        ManageEntity.save(entityManager,t);
+    public void save(Repair repair) {
+        ManageEntity.save(entityManager,repair);
     }
+    
     @Override
-    public void delete(Repair t) {
-        ManageEntity.delete(entityManager,t);
+    public void delete(Repair repair) {
+        ManageEntity.delete(entityManager,repair);
     }
 
     /**

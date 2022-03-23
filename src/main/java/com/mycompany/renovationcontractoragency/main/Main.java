@@ -9,14 +9,12 @@ import com.mycompany.renovationcontractoragency.enums.RepairType;
 import com.mycompany.renovationcontractoragency.enums.User_Type;
 import com.mycompany.renovationcontractoragency.repository.*;
 import com.mycompany.renovationcontractoragency.service.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.persistence.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,20 +40,6 @@ public class Main {
 //        //---DATA CREATION TEST---
         createData(userService, propertyService, repairService);
 
-//        //---USER TEST---
-//        updateUser(userService);
-//        getUserbyVat(userService);
-//        getUserbyEmail(userService);
-//        deleteUser(userService);
-
-//        //---PROPERTY TEST---
-//        getAllProperty(propertyService);
-//        updateProperty(propertyService);
-//        getPropertyById(propertyService);
-//        getPropertiesByVat(propertyService);
-//        deleteProperty(propertyService);
-//        getAllProperty(propertyService);
-
 //        //---REPAIR TEST---
 //        getAllRepair(repairService);
 //        getRepairByDate(repairService);
@@ -65,6 +49,19 @@ public class Main {
 //        updateRepair(repairService);
 //        deleteRepair(repairService);
 
+//        //---PROPERTY TEST---
+//        getAllProperty(propertyService);
+//        updateProperty(propertyService);
+//        getPropertyById(propertyService);
+//        getPropertiesByVat(propertyService);
+//        deleteProperty(propertyService);
+//        getAllProperty(propertyService);
+
+//        //---USER TEST---
+//        updateUser(userService);
+//        getUserbyVat(userService);
+//        getUserbyEmail(userService);
+//        deleteUser(userService);
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void createData(UserService userService, PropertyService propertyService, RepairService repairService) {
